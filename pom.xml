@@ -22,6 +22,8 @@
     <log4j2.version>2.10.0</log4j2.version>
     <jackson.version>2.11.4</jackson.version>
     <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+    <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+    <jedis.version>3.3.0</jedis.version>
   </properties>
 
   <dependencies>
@@ -105,6 +107,18 @@
       <version>3.4.6</version>
     </dependency>
 
+    <!-- redis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>${jedis.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.6</version>
+    </dependency>
+
     <!-- 日志门面 -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -155,6 +169,11 @@
       <artifactId>thymeleaf-spring5</artifactId>
       <version>${thymeleaf.version}</version>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.thymeleaf.extras</groupId>-->
+<!--      <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
+<!--      <version>${thymeleaf.versions}</version>-->
+<!--    </dependency>-->
 
     <!-- 数据库连接池 -->
     <dependency>
@@ -181,7 +200,6 @@
     </dependency>
 
     <!-- 上传组件包 -->
-
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -204,6 +222,11 @@
       <artifactId>thymeleaf</artifactId>
       <version>${thymeleaf.version}</version>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.thymeleaf</groupId>-->
+<!--      <artifactId>thymeleaf-spring5</artifactId>-->
+<!--      <version>${thymeleaf.version}</version>-->
+<!--    </dependency>-->
 
   </dependencies>
 
@@ -250,6 +273,8 @@
       <resource>
         <directory>src/main/resources</directory>
         <includes>
+          <include>*.properties</include>
+          <include>*.xml</include>
           <include>**/*.xml</include>
           <include>**/*.properties</include>
         </includes>
