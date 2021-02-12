@@ -7,11 +7,11 @@ import java.util.List;
 public interface IUserService {
     public List<User> selectAllUser();
 
-    public User selectById(Integer id);
+    public User selectUserById(Integer id);
 
     public Integer deleteUserById(Integer id);
 
     public Integer updateUserById(User user);
 
-    public Integer insertUserById(Integer id);
+    public Integer insertUserById(User user);
 }

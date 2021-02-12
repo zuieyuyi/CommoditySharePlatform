@@ -19,7 +19,7 @@
     <result column="ORDER_BEGIN_RENT_TIME" jdbcType="DATE" property="orderBeginRentTime" />
     <result column="ORDER_END_RENT_TIME" jdbcType="DATE" property="orderEndRentTime" />
     <result column="ORDER_BACK_TIME" jdbcType="INTEGER" property="orderBackTime" />
-    <result column="IS_ VALID" jdbcType="INTEGER" property="isValid" />
+    <result column="IS_VALID" jdbcType="INTEGER" property="isValid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -97,7 +97,7 @@
     -->
     ORDER_ID, ORDER_USER_ID, ORDER_COMMODITY_ID, ORDER_NAME, ORDER_CODE, ORDER_STATUS, 
     ORDER_CREATE_DATE, ORDER_ADDR, ORDER_ARRIVE_ADDR, ORDER_BEGIN_RENT_TIME, ORDER_END_RENT_TIME, 
-    ORDER_BACK_TIME, "IS_ VALID"
+    ORDER_BACK_TIME, "IS_VALID"
   </sql>
   <select id="selectByExample" parameterType="com.commodityshareplatform.subject.bean.OrderExample" resultMap="BaseResultMap">
     <!--
@@ -163,7 +163,7 @@
       ORDER_NAME, ORDER_CODE, ORDER_STATUS, 
       ORDER_CREATE_DATE, ORDER_ADDR, ORDER_ARRIVE_ADDR, 
       ORDER_BEGIN_RENT_TIME, ORDER_END_RENT_TIME, ORDER_BACK_TIME, 
-      "IS_ VALID")
+      "IS_VALID")
     values (#{orderId,jdbcType=INTEGER}, #{orderUserId,jdbcType=INTEGER}, #{orderCommodityId,jdbcType=INTEGER}, 
       #{orderName,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, 
       #{orderCreateDate,jdbcType=DATE}, #{orderAddr,jdbcType=VARCHAR}, #{orderArriveAddr,jdbcType=VARCHAR}, 
@@ -215,7 +215,7 @@
         ORDER_BACK_TIME,
       </if>
       <if test="isValid != null">
-        "IS_ VALID",
+        "IS_VALID",
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -316,7 +316,7 @@
         ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=INTEGER},
       </if>
       <if test="record.isValid != null">
-        "IS_ VALID" = #{record.isValid,jdbcType=INTEGER},
+        "IS_VALID" = #{record.isValid,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -342,7 +342,7 @@
       ORDER_BEGIN_RENT_TIME = #{record.orderBeginRentTime,jdbcType=DATE},
       ORDER_END_RENT_TIME = #{record.orderEndRentTime,jdbcType=DATE},
       ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=INTEGER},
-      "IS_ VALID" = #{record.isValid,jdbcType=INTEGER}
+      "IS_VALID" = #{record.isValid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -383,7 +383,7 @@
         ORDER_BACK_TIME = #{orderBackTime,jdbcType=INTEGER},
       </if>
       <if test="isValid != null">
-        "IS_ VALID" = #{isValid,jdbcType=INTEGER},
+        "IS_VALID" = #{isValid,jdbcType=INTEGER},
       </if>
     </set>
     where ORDER_ID = #{orderId,jdbcType=INTEGER}
@@ -406,7 +406,7 @@
       ORDER_BEGIN_RENT_TIME = #{orderBeginRentTime,jdbcType=DATE},
       ORDER_END_RENT_TIME = #{orderEndRentTime,jdbcType=DATE},
       ORDER_BACK_TIME = #{orderBackTime,jdbcType=INTEGER},
-      "IS_ VALID" = #{isValid,jdbcType=INTEGER}
+      "IS_VALID" = #{isValid,jdbcType=INTEGER}
     where ORDER_ID = #{orderId,jdbcType=INTEGER}
       and ORDER_USER_ID = #{orderUserId,jdbcType=INTEGER}
       and ORDER_COMMODITY_ID = #{orderCommodityId,jdbcType=INTEGER}

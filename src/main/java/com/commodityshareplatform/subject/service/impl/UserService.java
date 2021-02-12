@@ -6,6 +6,9 @@ import com.commodityshareplatform.subject.dao.UserMapper;
 import com.commodityshareplatform.subject.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class UserService implements IUserService {
      * @param id 用户id
      * @return  用户
      */
-    public User selectById(Integer id){
+    public User selectUserById(Integer id){
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andUserIdEqualTo(id);
@@ -41,35 +44,48 @@ public class UserService implements IUserService {
     }
 
     /**
-     * 通过id删除用户
+     * 通过id让用户失效用户
      * @param id 用户id
      * @return 删记录数
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW,
+            isolation = Isolation.READ_COMMITTED,
+            readOnly = false,
+            timeout = 2,
+            rollbackFor = {Exception.class})
     public Integer deleteUserById(Integer id){
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andUserIdEqualTo(id);
-        int result = userMapper.deleteByExample(userExample);
+//        UserExample userExample = new UserExample();
+//        UserExample.Criteria criteria = userExample.createCriteria();
+//        criteria.andUserIdEqualTo(id);
+//        int result = userMapper.deleteByExample(userExample);
+        User user = selectUserById(id);
+        user.setIsValid(0);
+        int result = userMapper.updateByExample(user, null);
         return result;
     }
 
     /**
-     * 通过id更新用户
+     * 更新用户
      * @param user 跟新的用户数据
      * @return 跟新结果
      */
     @Override
     public Integer updateUserById(User user) {
-        return null;
+//        UserExample userExample = new UserExample();
+//        UserExample.Criteria criteria = userExample.createCriteria();
+//        criteria.andUserIdEqualTo(user.getUserId());
+        int result = userMapper.updateByExample(user, null);
+        return result;
     }
 
     /**
-     * 通过id插入用户
-     * @param id
+     * 通过插入用户
+     * @param user
      * @return
      */
     @Override
-    public Integer insertUserById(Integer id) {
-        return null;
+    public Integer insertUserById(User user) {
+        int result = userMapper.insertSelective(user);
+        return result;
     }
 }
