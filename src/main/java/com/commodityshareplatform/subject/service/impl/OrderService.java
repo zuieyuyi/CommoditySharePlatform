@@ -62,4 +62,9 @@ public class OrderService implements IOrderService {
         int result = orderMapper.insertSelective(order);
         return result;
     }
+
+    @Override
+    public Integer deleteOrderBatchById(List<Integer> ids) {
+        return null;
+    }
 }

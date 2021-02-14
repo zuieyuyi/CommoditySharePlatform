@@ -63,4 +63,13 @@ public class CommodityService implements ICommodityService {
         int result = commodityMapper.insertSelective(commodity);
         return result;
     }
+    
+    @Override
+    public Integer deleteCommodityBatchById(List<Integer> ids) {
+        Integer result = 0;
+        for (Integer id:ids){
+            result += deleteCommodityById(id);
+        }
+        return result;
+    }
 }

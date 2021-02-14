@@ -14,4 +14,6 @@ public interface IOrderService {
     public Integer updateOrderById(Order order);
 
     public Integer insertOrderById(Order order);
+
+    public Integer deleteOrderBatchById(List<Integer> ids);
 }

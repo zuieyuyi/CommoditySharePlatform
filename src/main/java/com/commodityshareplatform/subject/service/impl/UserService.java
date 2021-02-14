@@ -88,4 +88,18 @@ public class UserService implements IUserService {
         int result = userMapper.insertSelective(user);
         return result;
     }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public Integer deleteUserBatchById(List<Integer> ids) {
+        Integer result = 0;
+        for (Integer id:ids){
+            result += deleteUserById(id);
+        }
+        return result;
+    }
 }
