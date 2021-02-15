@@ -19,6 +19,8 @@
 <!-- 显示表格数据 -->
 <div class="row">
     <div class="col-md-12">
+<!--        <div th:text="${param.name}"></div>-->
+<!--        <div th:if="${param.commodities!=null}"><div th:text="param.commodities.size"></div></div>-->
         <table class="table table-hover">
             <tr>
                 <th>Id</th>
@@ -31,7 +33,7 @@
                 <th>操作</th>
             </tr>
 
-            <tr th:each="commodity:${param.commodities}" >
+            <tr th:each="commodity:${commodities}" >
                 <td th:text="${commodity!=null?commodity.commodityId:''}"></td>
                 <td th:text="${commodity!=null?commodity.commodityName:''}"></td>
                 <td th:text="${commodity!=null?commodity.commodityStatus:''}"></td>
@@ -40,13 +42,6 @@
                 <td th:text="${commodity!=null?commodity.commodityQuality:''}"></td>
                 <td th:text="${commodity!=null?#dates.format(commodity.commodityCreateDate,'yyyy-MM-dd'):''}"></td>
 
-<!--                <td th:text="${commodity!=null?commodity.indexOf('commodityId'):''}"></td>-->
-<!--                <td th:text="${commodity!=null?commodity.indexOf('commodityName'):''}"></td>-->
-<!--                <td th:text="${commodity!=null?commodity.indexOf('commodityStatus'):''}"></td>-->
-<!--                <td th:text="${commodity!=null?commodity.indexOf('commodityNum'):''}"></td>-->
-<!--                <td >xxx</td>-->
-<!--                <td th:text="${commodity!=null?commodity.indexOf('commodityQuality'):''}"></td>-->
-<!--                <td th:text="${commodity!=null?#dates.format(commodity.indexOf('commodityCreateDate'),'yyyy-MM-dd'):''}"></td>-->
                 <td>
                     <button class="btn btn-primary btn-sm">
                         <!-- 按钮中图标 -->
@@ -58,6 +53,7 @@
                         删除
                     </button>
                 </td>
+            </tr>
         </table>
     </div>
 </div>

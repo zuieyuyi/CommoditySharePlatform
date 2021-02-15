@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -28,6 +29,12 @@ public class CommodityController {
 //        ModelAndView mv = new ModelAndView();
 //        mv.addObject("commodities",commodities);
 //        mv.setViewName("admin/commodity_list");
+//        Collection<Commodity> commodities = new ArrayList<>();
+//        Commodity commodity = new Commodity();
+//        commodity.setCommodityId(1);
+//        commodity.setCommodityName("shangpin1");
+//        commodities.add(commodity);
+//        model.addAttribute("name","zhangsan");
         model.addAttribute("commodities",commodities);
         return "admin/commodity_list";
     }
