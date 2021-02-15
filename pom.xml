@@ -20,7 +20,7 @@
     <spring.version>5.2.6.RELEASE</spring.version>
     <slf4j.version>1.7.7</slf4j.version>
     <log4j2.version>2.10.0</log4j2.version>
-    <jackson.version>2.11.4</jackson.version>
+    <jackson.version>2.10.5</jackson.version>
     <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
     <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
     <jedis.version>3.3.0</jedis.version>
@@ -262,6 +262,22 @@
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
       <version>4.5.3</version>
+    </dependency>
+
+    <!-- pagehelper插件 -->
+    <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.9</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
