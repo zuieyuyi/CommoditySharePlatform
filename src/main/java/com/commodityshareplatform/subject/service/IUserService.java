@@ -11,9 +11,9 @@ public interface IUserService {
 
     public Integer deleteUserById(Integer id);
 
-    public Integer updateUserById(User user);
+    public Integer updateUser(User user);
 
-    public Integer insertUserById(User user);
+    public Integer insertUser(User user);
 
     public Integer deleteUserBatchById(List<Integer> ids);
 }

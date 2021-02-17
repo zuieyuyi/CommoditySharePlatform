@@ -1,4 +1,4 @@
-package com.commodityshareplatform.subject.utils;
+package com.commodityshareplatform.subject.enuminfo;
 
 public enum ResultEnum {
     //这里是可以自己定义的，方便与前端交互即可

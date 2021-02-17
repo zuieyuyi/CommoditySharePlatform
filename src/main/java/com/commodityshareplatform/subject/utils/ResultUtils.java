@@ -1,5 +1,7 @@
 package com.commodityshareplatform.subject.utils;
 
+import com.commodityshareplatform.subject.enuminfo.ResultEnum;
+
 public class ResultUtils {
     /**
      * 返回带数据的信息

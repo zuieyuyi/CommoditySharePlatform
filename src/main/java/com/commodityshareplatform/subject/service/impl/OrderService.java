@@ -49,7 +49,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Integer updateOrderById(Order order) {
+    public Integer updateOrder(Order order) {
 //        OrderExample orderExample = new OrderExample();
 //        OrderExample.Criteria criteria = orderExample.createCriteria();
 //        criteria.andOrderIdEqualTo(order.getOrderId());
@@ -58,7 +58,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Integer insertOrderById(Order order) {
+    public Integer insertOrder(Order order) {
         int result = orderMapper.insertSelective(order);
         return result;
     }

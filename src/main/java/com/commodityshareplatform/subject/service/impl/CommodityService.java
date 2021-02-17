@@ -4,6 +4,7 @@ import com.commodityshareplatform.subject.bean.Commodity;
 import com.commodityshareplatform.subject.bean.CommodityExample;
 import com.commodityshareplatform.subject.bean.UserExample;
 import com.commodityshareplatform.subject.dao.CommodityMapper;
+import com.commodityshareplatform.subject.enuminfo.CommodityStatusEnum;
 import com.commodityshareplatform.subject.service.ICommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,20 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public List<Commodity> selectAllCommodity() {
-        List<Commodity> commodities = commodityMapper.selectByExample(null);
+//        CommodityExample commodityExample = new CommodityExample();
+//        CommodityExample.Criteria criteria = commodityExample.createCriteria();
+//        criteria.andIsValidEqualTo(1);
+//        List<Commodity> commodities = commodityMapper.selectByExample(null);
+        List<Commodity> commodities = commodityMapper.selectAllCommodities();
+        for (Commodity commodity:commodities){
+            if (commodity.getCommodityStatus() == CommodityStatusEnum.NOR_SELL.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.NOR_SELL.getStatus());
+            else if (commodity.getCommodityStatus() == CommodityStatusEnum.SELL.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL.getStatus());
+            else if (commodity.getCommodityStatus() == CommodityStatusEnum.SELL_OUT.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL_OUT.getStatus());
+        }
+
         return commodities;
     }
 
@@ -29,6 +43,7 @@ public class CommodityService implements ICommodityService {
         CommodityExample commodityExample = new CommodityExample();
         CommodityExample.Criteria criteria = commodityExample.createCriteria();
         criteria.andCommodityIdEqualTo(id);
+//        criteria.andIsValidEqualTo(1);
         List<Commodity> commodities = commodityMapper.selectByExample(commodityExample);
         return commodities.get(0);
     }
@@ -50,7 +65,7 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public Integer updateCommodityById(Commodity commodity) {
+    public Integer updateCommodity(Commodity commodity) {
 //        CommodityExample commodityExample = new CommodityExample();
 //        CommodityExample.Criteria criteria = commodityExample.createCriteria();
 //        criteria.andCommodityIdEqualTo(commodity.getCommodityId());
@@ -59,7 +74,7 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public Integer insertCommodityById(Commodity commodity) {
+    public Integer insertCommodity(Commodity commodity) {
         int result = commodityMapper.insertSelective(commodity);
         return result;
     }

@@ -117,4 +117,6 @@ public interface CommodityMapper {
      * @mbg.generated Fri Feb 12 16:54:45 CST 2021
      */
     int updateByPrimaryKey(Commodity record);
+
+    List<Commodity> selectAllCommodities();
 }

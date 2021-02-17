@@ -11,9 +11,9 @@ public interface ICommodityService {
 
     public Integer deleteCommodityById(Integer id);
 
-    public Integer updateCommodityById(Commodity commodity);
+    public Integer updateCommodity(Commodity commodity);
 
-    public Integer insertCommodityById(Commodity commodity);
+    public Integer insertCommodity(Commodity commodity);
 
     public Integer deleteCommodityBatchById(List<Integer> ids);
 }

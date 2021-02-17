@@ -70,7 +70,7 @@ public class UserService implements IUserService {
      * @return 跟新结果
      */
     @Override
-    public Integer updateUserById(User user) {
+    public Integer updateUser(User user) {
 //        UserExample userExample = new UserExample();
 //        UserExample.Criteria criteria = userExample.createCriteria();
 //        criteria.andUserIdEqualTo(user.getUserId());
@@ -84,7 +84,7 @@ public class UserService implements IUserService {
      * @return
      */
     @Override
-    public Integer insertUserById(User user) {
+    public Integer insertUser(User user) {
         int result = userMapper.insertSelective(user);
         return result;
     }
