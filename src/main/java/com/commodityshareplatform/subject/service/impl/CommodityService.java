@@ -76,14 +76,7 @@ public class CommodityService implements ICommodityService {
 //        criteria.andIsValidEqualTo(1);
         List<Commodity> commodities = commodityMapper.selectByExample(commodityExample);
         Commodity commodity = commodities.get(0);
-        //通过商品属性找到对应的卖家
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria1 = userExample.createCriteria();
-        criteria1.andUserIdEqualTo(commodity.getCommodityUserId());
-        List<User> users = userMapper.selectByExample(userExample);
-        User user = users.get(0);
-        //赋值
-        commodity.setCommodityUserName(user.getUserName());
+
         //判断商品的状态
         if (commodity.getCommodityStatus() == CommodityStatusEnum.NOR_SELL.getStatusCode())
             commodity.setCommodityStatusMsg(CommodityStatusEnum.NOR_SELL.getStatus());
@@ -91,6 +84,18 @@ public class CommodityService implements ICommodityService {
             commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL.getStatus());
         else if (commodity.getCommodityStatus() == CommodityStatusEnum.SELL_OUT.getStatusCode())
             commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL_OUT.getStatus());
+
+        if (commodity.getCommodityUserId() != null){
+            //通过商品属性找到对应的卖家
+            UserExample userExample = new UserExample();
+            UserExample.Criteria criteria1 = userExample.createCriteria();
+            criteria1.andUserIdEqualTo(commodity.getCommodityUserId());
+            List<User> users = userMapper.selectByExample(userExample);
+            User user = users.get(0);
+            //赋值
+            commodity.setCommodityUserName(user.getUserName());
+        }
+
         return commodity;
     }
 

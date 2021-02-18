@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="commodityStatus">商品状态</label>
                         <select class="form-control" id="commodityStatus" name="commodityStatus">
-                            <option value="1" selected>未上架</option>
+                            <option value="1" >未上架</option>
                             <option value="100" >出售中</option>
                             <option value="200" >售罄</option>
                         </select>
@@ -31,8 +31,8 @@
                         <input type="number" class="form-control" id="commodityNum" name="commodityNum" placeholder="商品数量">
                     </div>
                     <div class="form-group">
-                        <label for="userName">发布用户</label>
-                        <select class="form-control" id="userName" name="userName">
+                        <label for="commodityUserId">发布用户</label>
+                        <select class="form-control" id="commodityUserId" name="commodityUserId">
 
                         </select>
                     </div>
@@ -67,32 +67,32 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="updateCommodityId" name="commodityId">
+                    <input th:id="editComId" type="hidden" id="updateCommodityId" name="commodityId">
                     <div class="form-group">
-                        <label>商品名</label>
-                        <input type="text" class="form-control" name="commodityName" placeholder="商品名">
+                        <label for="editComName">商品名</label>
+                        <input type="text" id="editComName" class="form-control" name="commodityName" placeholder="商品名">
                     </div>
                     <div class="form-group">
-                        <label>商品状态</label>
-                        <select class="form-control" name="commodityStatus">
-                            <option value="1" selected>未上架</option>
+                        <label for="editComStatus">商品状态</label>
+                        <select id="editComStatus" class="form-control" name="commodityStatus">
+                            <option value="1" >未上架</option>
                             <option value="100" >出售中</option>
                             <option value="200" >售罄</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>商品数量</label>
-                        <input type="number" class="form-control" name="commodityNum" placeholder="商品数量">
+                        <label for="editComNum">商品数量</label>
+                        <input id="editComNum" type="number" class="form-control" name="commodityNum" placeholder="商品数量">
                     </div>
                     <div class="form-group">
-                        <label>发布用户</label>
-                        <select class="form-control" name="userName">
+                        <label for="editComUserId">发布用户</label>
+                        <select id="editComUserId" class="form-control" name="commodityUserId">
 
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>商品质量</label>
-                        <input type="text" class="form-control" name="commodityQuality" placeholder="商品质量">
+                        <label FOR="editComQuality">商品质量</label>
+                        <input id="editComQuality" type="text" class="form-control" name="commodityQuality" placeholder="商品质量">
                     </div>
                     <!--                    <div class="form-group">-->
                     <!--                        <label for="exampleInputFile">商品图片</label>-->
@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="updataCommodity()">保存</button>
+                    <button type="button" id="comSaveBut" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -174,12 +174,22 @@
     //当前页
     var currentNum;
 
+    // bindEditBut();
+
     //页面加载后执行
     $(document).ready(function () {
         toPage(1);
-        // modelAction("#add_commodity_model");
-        getAllUser();
+        // 模态框初始化
+        getAllUser("#commodityUserId");
+        getAllUser("#editComUserId");
     })
+
+    //给编辑按钮添加事件
+    $(document).on("click",".com_edit_but",function (){
+        //1、查出商品信息
+        getCommodityById($(this).attr("data-info"));
+        //2、提交更新数据
+    });
 
     //发送请求获取那一页数据
     function toPage(pn) {
@@ -221,11 +231,13 @@
             var comQualityElm = $("<td></td>").append(item.commodityQuality);
             var comCreateDateElm = $("<td></td>").append(item.commodityCreateDate);
             var comOperateElm = $("<td></td>").append();
-
+            //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn com_edit_but").attr("aria-hidden", "true")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.commodityId);
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.commodityId)
+                .attr("data-toggle","modal").attr("data-target","#update_commodity_modal");
             //在创建编辑按钮时加上用于显示员工id的属性
             editButTd.attr("edit_id", item.commodityId);
+            //删除按钮
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn com_del_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除").attr("data-info",item.commodityId);
             delButTd.attr("delete_id", item.commodityId);
@@ -321,22 +333,22 @@
     }
 
     //获取所有用户
-    function getAllUser(){
+    function getAllUser(selectId){
         $.ajax({
             url: PROJECT_PATH+"/admin/users",
             type: "GET",
             success: function(result) {
-                buildUserSelect(result)
+                buildUserSelect(result,selectId)
             }
         });
     }
     //生成模态框用户下拉框内容
-    function buildUserSelect(result){
-        var selectTag = $("#userName");
+    function buildUserSelect(result,selectId){
+        var selectTag = $(selectId);
         //清理下拉框
         selectTag.empty();
 
-        $("<option selected></option>").appendTo(selectTag);
+        $("<option></option>").appendTo(selectTag);
 
         var users = result.data;
         //生成下拉框中元素
@@ -348,10 +360,20 @@
 
     //新增商品请求
     function addCommodity(){
+        var commodityName = $("#commodityName").val();
+        var commodityStatus = $("#commodityStatus").val();
+        var commodityNum = $("#commodityNum").val();
+        var commodityUserId = $("#commodityUserId").val();
+        var commodityQuality = $("#commodityQuality").val();
+
         $.ajax({
             url: PROJECT_PATH+"/admin/commodity",
             dataType: "json",
-            data: $("#commodityAdd").serialize(),
+            data: {"commodityName":commodityName,
+                "commodityStatus":commodityStatus,
+                "commodityNum":commodityNum,
+                "commodityUserId":commodityUserId,
+                "commodityQuality":commodityQuality},
             type: "POST",
             success: function(result){
                 if (result.code == 10000){
@@ -369,16 +391,33 @@
     }
 
     //通过id从数据库中读取对应的数据
-    // function getCommodityById() {
-    //     var commodityId = $(".com_edit_but").attr("data-info");
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/commodity/"+commodityId,
-    //         type: "GET",
-    //         success: function (result) {
-    //             //将获取的数据回显给表单
-    //         }
-    //     })
-    // }
+    function getCommodityById(commodityId) {
+        $.ajax({
+            url: PROJECT_PATH+"/admin/commodity/"+commodityId,
+            type: "GET",
+            success: function (result) {
+                //清空表单
+                $("#commodityUpdate")[0].reset();
+                //将获取的数据回显给表单
+                $("#editComId").val(commodityId);
+                $("#editComName").val(result.data.commodityName);
+                $("#editComNum").val(result.data.commodityNum);
+                // $("#editComUserId").append(result.data.commodityName);
+                // var optionTag = $("#editComUserId")
+
+                $("#editComUserId").find("option[value="+result.data.commodityUserId+"]").attr("selected",'selected');
+
+                $("#editComQuality").val(result.data.commodityName);
+                // // $("#editComStatus").append(result.data.commodityStatus);
+                // var statusOptionTag = $("#editComStatus>option");
+                console.log(statusOptionTag);
+                $("#editComStatus").find("option[value="+result.data.commodityStatus+"]").attr("selected",'selected');
+
+            }
+        })
+    }
+
+    //
 
     //修改商品请求
     // function updataCommodity(){
