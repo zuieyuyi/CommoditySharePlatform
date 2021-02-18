@@ -77,4 +77,6 @@ public interface UserMapper {
      * @mbg.generated Fri Feb 12 16:54:45 CST 2021
      */
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
+
+    List<User> selectAllUsers();
 }

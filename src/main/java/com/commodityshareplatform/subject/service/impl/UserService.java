@@ -25,7 +25,7 @@ public class UserService implements IUserService {
      * @return 全部用户
      */
     public List<User> selectAllUser(){
-        List<User> users = userMapper.selectByExample(null);
+        List<User> users = userMapper.selectAllUsers();
         return users;
     }
 

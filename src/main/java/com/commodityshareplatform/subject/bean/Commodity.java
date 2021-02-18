@@ -1,5 +1,7 @@
 package com.commodityshareplatform.subject.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Commodity {
@@ -19,7 +21,7 @@ public class Commodity {
     private String commodityTag;
 
     private String commodityQuality;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date commodityCreateDate;
 
     private Integer isValid;
@@ -27,6 +29,8 @@ public class Commodity {
     private String commodityDetails;
 
     private String commodityStatusMsg;
+
+    private String commodityUserName;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -122,5 +126,13 @@ public class Commodity {
 
     public void setCommodityStatusMsg(String commodityStatusMsg) {
         this.commodityStatusMsg = commodityStatusMsg;
+    }
+
+    public String getCommodityUserName() {
+        return commodityUserName;
+    }
+
+    public void setCommodityUserName(String commodityUserName) {
+        this.commodityUserName = commodityUserName;
     }
 }

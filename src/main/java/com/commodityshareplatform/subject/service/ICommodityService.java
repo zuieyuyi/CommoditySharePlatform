@@ -5,7 +5,7 @@ import com.commodityshareplatform.subject.bean.Commodity;
 import java.util.List;
 
 public interface ICommodityService {
-    public List<Commodity> selectAllCommodity();
+    public List<Commodity> selectAllCommodities();
 
     public Commodity selectCommodityById(Integer id);
 
