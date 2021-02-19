@@ -70,9 +70,9 @@ public class CommodityController {
     /**
      * 保存商品修改信息
      */
-    @RequestMapping(value = "/commodity/{commodityId}",method = RequestMethod.PUT)
+    @RequestMapping(value = "commodity",method = RequestMethod.PUT)
     @ResponseBody
-    public Result<Commodity> saveCommdity(Commodity commodity){
+    public Result<Commodity> saveCommodity(Commodity commodity){
         Integer result = commodityService.updateCommodity(commodity);
         if (result != null){
             return ResultUtils.success();

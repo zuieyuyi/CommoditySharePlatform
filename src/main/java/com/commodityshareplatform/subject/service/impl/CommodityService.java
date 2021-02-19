@@ -106,21 +106,29 @@ public class CommodityService implements ICommodityService {
             rollbackFor = {Exception.class})
     @Override
     public Integer deleteCommodityById(Integer id) {
-//        CommodityExample commodityExample = new CommodityExample();
-//        CommodityExample.Criteria criteria = commodityExample.createCriteria();
-//        criteria.andCommodityIdEqualTo(id);
+        CommodityExample commodityExample = new CommodityExample();
+        CommodityExample.Criteria criteria = commodityExample.createCriteria();
+        criteria.andCommodityIdEqualTo(id);
         Commodity commodity = selectCommodityById(id);
         commodity.setIsValid(0);
-        int result = commodityMapper.updateByExample(commodity, null);
+        int result = commodityMapper.updateByExample(commodity, commodityExample);
         return result;
     }
 
     @Override
     public Integer updateCommodity(Commodity commodity) {
-//        CommodityExample commodityExample = new CommodityExample();
-//        CommodityExample.Criteria criteria = commodityExample.createCriteria();
-//        criteria.andCommodityIdEqualTo(commodity.getCommodityId());
-        int result = commodityMapper.updateByExample(commodity, null);
+        //需要先查出商品信息
+        Commodity commodity1 = selectCommodityById(commodity.getCommodityId());
+        commodity1.setCommodityName(commodity.getCommodityName());
+        commodity1.setCommodityStatus(commodity.getCommodityStatus());
+        commodity1.setCommodityNum(commodity.getCommodityNum());
+        commodity1.setCommodityUserId(commodity.getCommodityUserId());
+        commodity1.setCommodityQuality(commodity.getCommodityQuality());
+
+        CommodityExample commodityExample = new CommodityExample();
+        CommodityExample.Criteria criteria = commodityExample.createCriteria();
+        criteria.andCommodityIdEqualTo(commodity.getCommodityId());
+        int result = commodityMapper.updateByExample(commodity1, commodityExample);
         return result;
     }
 
