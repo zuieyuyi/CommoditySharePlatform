@@ -14,41 +14,48 @@
                 </div>
                 <div class="modal-body">
 
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="commodityName">商品名</label>-->
-                    <!--                        <input type="text" class="form-control" id="commodityName" name="commodityName" placeholder="商品名">-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="commodityStatus">商品状态</label>-->
-                    <!--                        <select class="form-control" id="commodityStatus" name="commodityStatus">-->
-                    <!--                            <option value="1" >未上架</option>-->
-                    <!--                            <option value="100" >出售中</option>-->
-                    <!--                            <option value="200" >售罄</option>-->
-                    <!--                        </select>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="commodityNum">商品数量</label>-->
-                    <!--                        <input type="number" class="form-control" id="commodityNum" name="commodityNum" placeholder="商品数量">-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="commodityUserId">发布用户</label>-->
-                    <!--                        <select class="form-control" id="commodityUserId" name="commodityUserId">-->
-
-                    <!--                        </select>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="commodityQuality">商品质量</label>-->
-                    <!--                        <input type="text" class="form-control" name="commodityQuality" id="commodityQuality" placeholder="商品质量">-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="exampleInputFile">商品图片</label>-->
-                    <!--                        <input type="file" id="exampleInputFile">-->
-                    <!--                        <p class="help-block">Example block-level help text here.</p>-->
-                    <!--                    </div>-->
+                    <div class="form-group">
+                        <label for="userName">用户名</label>
+                        <input type="text" class="form-control" id="userName" name="userName"
+                               placeholder="用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPw">用户密码</label>
+                        <input type="password" class="form-control" id="userPw" name="userPw"
+                               placeholder="用户密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">用户邮箱</label>
+                        <input type="email" class="form-control" id="userEmail" name="userEmail"
+                               placeholder="邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label for="userAddr">用户地址</label>
+                        <input type="email" class="form-control" id="userAddr" name="userAddr"
+                               placeholder="用户地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="userStatus">用户状态</label>
+                        <select class="form-control" id="userStatus" name="userStatus">
+                            <option value="1">VIP1</option>
+                            <option value="2">VIP2</option>
+                            <option value="3">VIP3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMoney">金钱剩余总额</label>
+                        <input type="text" class="form-control" name="userMoney" id="userMoney"
+                               placeholder="金钱剩余总额">
+                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label for="exampleInputFile">商品图片</label>-->
+<!--                        <input type="file" id="exampleInputFile">-->
+<!--                        <p class="help-block">Example block-level help text here.</p>-->
+<!--                    </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="addUser()">添加</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -56,7 +63,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改用户模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="update_user_modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="updata_user_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="userUpdate">
@@ -66,33 +73,40 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <!--                    <input th:id="editComId" type="hidden" id="editComId" name="commodityId">-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="editComName">商品名</label>-->
-                    <!--                        <input type="text" id="editComName" class="form-control" name="commodityName" placeholder="商品名">-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="editComStatus">商品状态</label>-->
-                    <!--                        <select id="editComStatus" class="form-control" name="commodityStatus">-->
-                    <!--                            <option value="1" >未上架</option>-->
-                    <!--                            <option value="100" >出售中</option>-->
-                    <!--                            <option value="200" >售罄</option>-->
-                    <!--                        </select>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="editComNum">商品数量</label>-->
-                    <!--                        <input id="editComNum" type="number" class="form-control" name="commodityNum" placeholder="商品数量">-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="editComUserId">发布用户</label>-->
-                    <!--                        <select id="editComUserId" class="form-control" name="commodityUserId">-->
-
-                    <!--                        </select>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label FOR="editComQuality">商品质量</label>-->
-                    <!--                        <input id="editComQuality" type="text" class="form-control" name="commodityQuality" placeholder="商品质量">-->
-                    <!--                    </div>-->
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="userName">用户名</label>
+                        <input type="text" class="form-control" id="editUserName" name="editUserName"
+                               placeholder="用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPw">用户密码</label>
+                        <input type="password" class="form-control" id="editUserPw" name="editUserPw"
+                               placeholder="用户密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">用户邮箱</label>
+                        <input type="email" class="form-control" id="editUserEmail" name="editUserEmail"
+                               placeholder="邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label for="userAddr">用户地址</label>
+                        <input type="email" class="form-control" id="editUserAddr" name="editUserAddr"
+                               placeholder="用户地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="userStatus">用户状态</label>
+                        <select class="form-control" id="editUserStatus" name="editUserStatus">
+                            <option value="1">VIP1</option>
+                            <option value="2">VIP2</option>
+                            <option value="3">VIP3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMoney">金钱剩余总额</label>
+                        <input type="text" class="form-control" name="editUserMoney" id="editUserMoney"
+                               placeholder="金钱剩余总额">
+                    </div>
                     <!--                    <div class="form-group">-->
                     <!--                        <label for="exampleInputFile">商品图片</label>-->
                     <!--                        <input type="file" id="exampleInputFile">-->
@@ -101,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="comSaveBut" class="btn btn-primary">保存</button>
+                    <button type="button" id="comSaveBut" class="btn btn-primary" onclick="updataUser()">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -175,27 +189,24 @@
 
     // // bindEditBut();
     //
-    // //页面加载后执行
+    //页面加载后执行
     $(document).ready(function () {
         toPage(1);
-        // 模态框初始化
-        // getAllUser("#commodityUserId");
-        // getAllUser("#editComUserId");
     })
-    //
-    // //给编辑按钮添加事件
-    // $(document).on("click",".com_edit_but",function (){
-    //     //1、查出用户信息
-    //     getCommodityById($(this).attr("data-info"));
-    // });
-    //
-    // //删除按钮事件
-    // $(document).on("click",".com_del_but",function () {
-    //     var comf = confirm("是否删除id为" + $(this).attr("data-info") + "的这个用户")
-    //     if (comf == true){
-    //         delCommodity($(this).attr("data-info"));
-    //     }
-    // });
+
+    //给编辑按钮添加事件
+    $(document).on("click",".user_edit_but",function (){
+        //1、查出用户信息
+        getUserById($(this).attr("data-info"));
+    });
+
+    //删除按钮事件
+    $(document).on("click",".user_del_but",function () {
+        var comf = confirm("是否删除id为" + $(this).attr("data-info") + "的这个用户")
+        if (comf == true){
+            delUser($(this).attr("data-info"));
+        }
+    });
     //
     //发送请求获取那一页数据
     function toPage(pn) {
@@ -230,18 +241,18 @@
             var userPWElm = $("<td></td>").append(item.userPw);
             var userADDRElm = $("<td></td>").append(item.userAddr);
             var userEmailElm = $("<td></td>").append(item.userEmail);
-            var userStatusElm = $("<td></td>").append(item.userStatus);
+            var userStatusElm = $("<td></td>").append(item.userStatusMsg);
             var userMoneyElm = $("<td></td>").append(item.userMoney);
 
             var userOperateElm = $("<td></td>").append();
             //编辑按钮
-            var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn com_edit_but").attr("aria-hidden", "true")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.commodityId)
-                .attr("data-toggle","modal").attr("data-target","#update_commodity_modal");
+            var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn user_edit_but").attr("aria-hidden", "true")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.userId)
+                .attr("data-toggle","modal").attr("data-target","#updata_user_modal");
 
             //删除按钮
-            var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn com_del_but").attr("aria-hidden", "true")
-                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除").attr("data-info",item.commodityId);
+            var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn user_del_but").attr("aria-hidden", "true")
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除").attr("data-info",item.userId);
 
             userOperateElm.append(editButTd).append(" ").append(delButTd);
 
@@ -358,121 +369,115 @@
     //         optionTag.appendTo(selectTag);
     //     });
     // }
-    //
-    // //新增用户请求
-    // function addCommodity(){
-    //     var commodityName = $("#commodityName").val();
-    //     var commodityStatus = $("#commodityStatus").val();
-    //     var commodityNum = $("#commodityNum").val();
-    //     var commodityUserId = $("#commodityUserId").val();
-    //     var commodityQuality = $("#commodityQuality").val();
-    //
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/commodity",
-    //         dataType: "json",
-    //         data: {"commodityName":commodityName,
-    //             "commodityStatus":commodityStatus,
-    //             "commodityNum":commodityNum,
-    //             "commodityUserId":commodityUserId,
-    //             "commodityQuality":commodityQuality},
-    //         type: "POST",
-    //         success: function(result){
-    //             if (result.code == 10000){
-    //                 //关闭模态框
-    //                 $("#add_commodity_modal").modal("hide");
-    //                 //清空表单
-    //                 $("#commodityAdd")[0].reset();
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     })
-    // }
-    //
-    // //通过id从数据库中读取对应的数据
-    // function getCommodityById(commodityId) {
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/commodity/"+commodityId,
-    //         type: "GET",
-    //         success: function (result) {
-    //             //清空表单
-    //             $("#commodityUpdate")[0].reset();
-    //             //将获取的数据回显给表单
-    //             $("#editComId").val(commodityId);
-    //             $("#editComName").val(result.data.commodityName);
-    //             $("#editComNum").val(result.data.commodityNum);
-    //             // $("#editComUserId").append(result.data.commodityName);
-    //             // var optionTag = $("#editComUserId")
-    //
-    //             $("#editComUserId").find("option[value="+result.data.commodityUserId+"]").attr("selected",'selected');
-    //
-    //             $("#editComQuality").val(result.data.commodityQuality);
-    //             // // $("#editComStatus").append(result.data.commodityStatus);
-    //             // var statusOptionTag = $("#editComStatus>option");
-    //             // console.log(statusOptionTag);
-    //             $("#editComStatus").find("option[value="+result.data.commodityStatus+"]").attr("selected",'selected');
-    //
-    //         }
-    //     });
-    // }
-    //
-    // //修改用户请求
-    // function updataCommodity(){
-    //     var commodityId = $("#editComId").val();
-    //     var commodityName = $("#editComName").val();
-    //     var commodityStatus = $("#editComStatus").val();
-    //     var commodityNum = $("#editComNum").val();
-    //     var commodityUserId = $("#editComUserId").val();
-    //     var commodityQuality = $("#editComQuality").val();
-    //
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/commodity",
-    //         dataType: "json",
-    //         data: {"_method":"PUT",
-    //             "commodityId":commodityId,
-    //             "commodityName":commodityName,
-    //             "commodityStatus":commodityStatus,
-    //             "commodityNum":commodityNum,
-    //             "commodityUserId":commodityUserId,
-    //             "commodityQuality":commodityQuality},
-    //         type: "POST",
-    //         success: function(result){
-    //             if (result.code == 10000){
-    //                 //关闭模态框
-    //                 $("#update_commodity_modal").modal("hide");
-    //                 //清空表单
-    //                 $("#commodityUpdate")[0].reset();
-    //                 //弹窗提示成功
-    //                 alert("修改成功");
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     })
-    // }
-    //
-    // //删除用户请求
-    // function delCommodity(commodityId){
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/commodity/"+commodityId,
-    //         data: {"_method":"DELETE"},
-    //         type: "POST",
-    //         success: function (result) {
-    //             if (result.code == 10000){
-    //                 //弹窗提示删除成功
-    //                 alert("删除成功");
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     })
-    // }
+    //新增用户请求
+    function addUser(){
+        var userName = $("#userName").val();
+        var userPw = $("#userPw").val();
+        var userAddr = $("#userAddr").val();
+        var userEmail = $("#userEmail").val();
+        var userStatus = $("#userStatus").val();
+        var userMoney = $("#userMoney").val();
+
+        $.ajax({
+            url: PROJECT_PATH+"/admin/user",
+            dataType: "json",
+            data: {"userName":userName,
+                "userPw":userPw,
+                "userAddr":userAddr,
+                "userEmail":userEmail,
+                "userStatus":userStatus,
+                "userMoney":userMoney},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    //关闭模态框
+                    $("#add_user_modal").modal("hide");
+                    //清空表单
+                    $("#userAdd")[0].reset();
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        })
+    }
+
+    //通过id从数据库中读取对应的数据
+    function getUserById(userId) {
+        $.ajax({
+            url: PROJECT_PATH+"/admin/user/"+userId,
+            type: "GET",
+            success: function (result) {
+                //清空表单
+                $("#userUpdate")[0].reset();
+                //将获取的数据回显给表单
+                $("#editUserId").val(userId);
+                $("#editUserName").val(result.data.userName);
+                $("#editUserPw").val(result.data.userPw);
+                $("#editUserAddr").val(result.data.userAddr);
+                $("#editUserEmail").val(result.data.userEmail);
+                $("#editUserStatus").find("option[value="+result.data.userStatus+"]").attr("selected",'selected');
+                $("#editUserMoney").val(result.data.userMoney);
+            }
+        });
+    }
+
+    //保存用户请求
+    function updataUser(){
+        var userId = $("#editUserId").val()
+        var userName = $("#editUserName").val();
+        var userPw = $("#editUserPw").val();
+        var userAddr = $("#editUserAddr").val();
+        var userEmail = $("#editUserEmail").val();
+        var userStatus = $("#editUserStatus").val();
+        var userMoney = $("#editUserMoney").val();
+
+        $.ajax({
+            url: PROJECT_PATH+"/admin/user",
+            dataType: "json",
+            data: {"_method":"PUT",
+                "userId":userId,
+                "userName":userName,
+                "userPw":userPw,
+                "userAddr":userAddr,
+                "userEmail":userEmail,
+                "userStatus":userStatus,
+                "userMoney":userMoney},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    //关闭模态框
+                    $("#updata_user_modal").modal("hide");
+                    //清空表单
+                    $("#userAdd")[0].reset();
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+    }
+
+    //删除用户请求
+    function delUser(userId){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/user/"+userId,
+            data: {"_method":"DELETE"},
+            type: "POST",
+            success: function (result) {
+                if (result.code == 10000){
+                    //弹窗提示删除成功
+                    alert("删除成功");
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        })
+    }
     /*]]>*/
 </script>
 </html>

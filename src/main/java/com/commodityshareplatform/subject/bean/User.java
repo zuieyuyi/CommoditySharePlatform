@@ -31,6 +31,8 @@ public class User {
 
     private String userDetails;
 
+    private String userStatusMsg;
+
     public Integer getUserId() {
         return userId;
     }
@@ -133,5 +135,13 @@ public class User {
 
     public void setUserDetails(String userDetails) {
         this.userDetails = userDetails == null ? null : userDetails.trim();
+    }
+
+    public String getUserStatusMsg() {
+        return userStatusMsg;
+    }
+
+    public void setUserStatusMsg(String userStatusMsg) {
+        this.userStatusMsg = userStatusMsg;
     }
 }

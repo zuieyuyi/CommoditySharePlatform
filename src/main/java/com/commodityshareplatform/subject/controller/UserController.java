@@ -9,10 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,6 +47,49 @@ public class UserController {
         List<User> users = userService.selectAllUser();
         PageInfo pageInfo = new PageInfo(users,5);
         return ResultUtils.success(pageInfo);
+    }
+
+    @RequestMapping(value = "/user/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getUserById(@PathVariable("userId") Integer userId){
+        User user = userService.selectUserById(userId);
+        return ResultUtils.success(user);
+    }
+
+    /**
+     * 添加用户
+     */
+    @RequestMapping(value = "user",method = RequestMethod.POST)
+    @ResponseBody
+    public Result addUser(User user){
+        Integer result = userService.insertUser(user);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"用户添加失败");
+        }
+    }
+
+    @RequestMapping(value = "user",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result saveUser(User user){
+        Integer result = userService.updateUser(user);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"用户保存失败");
+        }
+    }
+
+    @RequestMapping(value = "user/{userId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Result deleteUser(@PathVariable("userId") Integer userId){
+        Integer result = userService.deleteUserById(userId);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"用户保存失败");
+        }
     }
 
 }

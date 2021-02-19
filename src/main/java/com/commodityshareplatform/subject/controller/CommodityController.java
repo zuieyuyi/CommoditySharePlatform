@@ -77,7 +77,7 @@ public class CommodityController {
         if (result != null){
             return ResultUtils.success();
         }else{
-            return ResultUtils.error(-1,"商品修改失败");
+            return ResultUtils.error(-1,"商品保存失败");
         }
     }
 
