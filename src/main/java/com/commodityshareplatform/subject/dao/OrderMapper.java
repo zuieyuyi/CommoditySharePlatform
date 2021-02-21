@@ -94,4 +94,6 @@ public interface OrderMapper {
      * @mbg.generated Fri Feb 12 16:54:45 CST 2021
      */
     int updateByPrimaryKey(Order record);
+
+    List<Order> selectAllOrder();
 }

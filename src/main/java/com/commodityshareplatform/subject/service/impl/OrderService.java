@@ -19,7 +19,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<Order> selectAllOrder() {
-        List<Order> orders = orderMapper.selectByExample(null);
+        List<Order> orders = orderMapper.selectAllOrder();
         return orders;
     }
 
