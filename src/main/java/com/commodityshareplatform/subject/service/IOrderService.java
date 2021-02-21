@@ -5,7 +5,7 @@ import com.commodityshareplatform.subject.bean.Order;
 import java.util.List;
 
 public interface IOrderService {
-    public List<Order> selectAllOrder();
+    public List<Order> selectAllOrders();
 
     public Order selectOrderById(Integer id);
 

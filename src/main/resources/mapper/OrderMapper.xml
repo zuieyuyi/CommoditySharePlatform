@@ -19,7 +19,7 @@
     <result column="ORDER_ARRIVE_ADDR" jdbcType="VARCHAR" property="orderArriveAddr" />
     <result column="ORDER_BEGIN_RENT_TIME" jdbcType="DATE" property="orderBeginRentTime" />
     <result column="ORDER_END_RENT_TIME" jdbcType="DATE" property="orderEndRentTime" />
-    <result column="ORDER_BACK_TIME" jdbcType="INTEGER" property="orderBackTime" />
+    <result column="ORDER_BACK_TIME" jdbcType="DATE" property="orderBackTime" />
     <result column="IS_VALID" jdbcType="INTEGER" property="isValid" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -170,7 +170,7 @@
     values (#{orderId,jdbcType=INTEGER}, #{orderPubUserId,jdbcType=INTEGER}, #{orderUserId,jdbcType=INTEGER}, #{orderCommodityId,jdbcType=INTEGER},
       #{orderName,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER},
       #{orderCreateDate,jdbcType=DATE}, #{orderAddr,jdbcType=VARCHAR}, #{orderArriveAddr,jdbcType=VARCHAR},
-      #{orderBeginRentTime,jdbcType=DATE}, #{orderEndRentTime,jdbcType=DATE}, #{orderBackTime,jdbcType=INTEGER},
+      #{orderBeginRentTime,jdbcType=DATE}, #{orderEndRentTime,jdbcType=DATE}, #{orderBackTime,jdbcType=DATE},
       #{isValid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.commodityshareplatform.subject.bean.Order">
@@ -262,7 +262,7 @@
         #{orderEndRentTime,jdbcType=DATE},
       </if>
       <if test="orderBackTime != null">
-        #{orderBackTime,jdbcType=INTEGER},
+        #{orderBackTime,jdbcType=DATE},
       </if>
       <if test="isValid != null">
         #{isValid,jdbcType=INTEGER},
@@ -325,7 +325,7 @@
         ORDER_END_RENT_TIME = #{record.orderEndRentTime,jdbcType=DATE},
       </if>
       <if test="record.orderBackTime != null">
-        ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=INTEGER},
+        ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=DATE},
       </if>
       <if test="record.isValid != null">
         IS_VALID = #{record.isValid,jdbcType=INTEGER},
@@ -354,7 +354,7 @@
       ORDER_ARRIVE_ADDR = #{record.orderArriveAddr,jdbcType=VARCHAR},
       ORDER_BEGIN_RENT_TIME = #{record.orderBeginRentTime,jdbcType=DATE},
       ORDER_END_RENT_TIME = #{record.orderEndRentTime,jdbcType=DATE},
-      ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=INTEGER},
+      ORDER_BACK_TIME = #{record.orderBackTime,jdbcType=DATE},
       IS_VALID = #{record.isValid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -393,7 +393,7 @@
         ORDER_END_RENT_TIME = #{orderEndRentTime,jdbcType=DATE},
       </if>
       <if test="orderBackTime != null">
-        ORDER_BACK_TIME = #{orderBackTime,jdbcType=INTEGER},
+        ORDER_BACK_TIME = #{orderBackTime,jdbcType=DATE},
       </if>
       <if test="isValid != null">
         IS_VALID = #{isValid,jdbcType=INTEGER},
@@ -419,7 +419,7 @@
       ORDER_ARRIVE_ADDR = #{orderArriveAddr,jdbcType=VARCHAR},
       ORDER_BEGIN_RENT_TIME = #{orderBeginRentTime,jdbcType=DATE},
       ORDER_END_RENT_TIME = #{orderEndRentTime,jdbcType=DATE},
-      ORDER_BACK_TIME = #{orderBackTime,jdbcType=INTEGER},
+      ORDER_BACK_TIME = #{orderBackTime,jdbcType=DATE},
       IS_VALID = #{isValid,jdbcType=INTEGER}
     where ORDER_ID = #{orderId,jdbcType=INTEGER}
     and ORDER_PUB_USER_ID = #{orderPubUserId,jdbcType=INTEGER}

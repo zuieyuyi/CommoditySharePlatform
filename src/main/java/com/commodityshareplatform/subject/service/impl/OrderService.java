@@ -1,8 +1,13 @@
 package com.commodityshareplatform.subject.service.impl;
 
+import com.commodityshareplatform.subject.bean.Commodity;
 import com.commodityshareplatform.subject.bean.Order;
 import com.commodityshareplatform.subject.bean.OrderExample;
+import com.commodityshareplatform.subject.bean.User;
+import com.commodityshareplatform.subject.dao.CommodityMapper;
 import com.commodityshareplatform.subject.dao.OrderMapper;
+import com.commodityshareplatform.subject.dao.UserMapper;
+import com.commodityshareplatform.subject.enuminfo.OrderStatusEnum;
 import com.commodityshareplatform.subject.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +21,54 @@ import java.util.List;
 public class OrderService implements IOrderService {
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    CommodityMapper commodityMapper;
 
     @Override
-    public List<Order> selectAllOrder() {
+    public List<Order> selectAllOrders() {
         List<Order> orders = orderMapper.selectAllOrder();
+        List<User> users = userMapper.selectAllUsers();
+        List<Commodity> commodities = commodityMapper.selectAllCommodities();
+
+        for (Order order:orders){
+            //确定订单状态信息
+            if (order.getOrderStatus() == OrderStatusEnum.PAYMENT.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.PAYMENT.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.TAKE_DELIVERY.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.TAKE_DELIVERY.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.RENT_OUT.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.RENT_OUT.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.RETURN.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.RETURN.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.RETURN_OVER.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.RETURN_OVER.getStatus());
+            }
+
+            for (User user:users){
+                //确认订单卖家
+                if (user.getUserId()==order.getOrderUserId()){
+                    order.setOrderUserName(user.getUserName());
+                }
+                //确认订单买家
+                if (user.getUserId()==order.getOrderPubUserId()){
+                    order.setOrderPubUserName(user.getUserName());
+                }
+                if ((!order.getOrderUserName().isEmpty())&&(!order.getOrderPubUserName().isEmpty())){
+                    break;
+                }
+            }
+
+            for (Commodity commodity:commodities){
+                //确认商品信息
+                if (commodity.getCommodityId() == order.getOrderCommodityId()){
+                    order.setOrderCommodityName(commodity.getCommodityName());
+                    break;
+                }
+            }
+        }
+
         return orders;
     }
 

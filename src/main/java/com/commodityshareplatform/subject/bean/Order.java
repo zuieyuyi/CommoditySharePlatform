@@ -27,9 +27,17 @@ public class Order extends OrderKey {
 
     private Date orderEndRentTime;
 
-    private Integer orderBackTime;
+    private Date orderBackTime;
 
     private Integer isValid;
+
+    private String OrderStatusMsg;
+
+    private String orderUserName;
+
+    private String orderPubUserName;
+
+    private String orderCommodityName;
 
     @Override
     public Integer getOrderId() {
@@ -133,11 +141,11 @@ public class Order extends OrderKey {
         this.orderEndRentTime = orderEndRentTime;
     }
 
-    public Integer getOrderBackTime() {
+    public Date getOrderBackTime() {
         return orderBackTime;
     }
 
-    public void setOrderBackTime(Integer orderBackTime) {
+    public void setOrderBackTime(Date orderBackTime) {
         this.orderBackTime = orderBackTime;
     }
 
@@ -147,5 +155,37 @@ public class Order extends OrderKey {
 
     public void setIsValid(Integer isValid) {
         this.isValid = isValid;
+    }
+
+    public String getOrderStatusMsg() {
+        return OrderStatusMsg;
+    }
+
+    public void setOrderStatusMsg(String orderStatusMsg) {
+        OrderStatusMsg = orderStatusMsg;
+    }
+
+    public String getOrderUserName() {
+        return orderUserName;
+    }
+
+    public void setOrderUserName(String orderUserName) {
+        this.orderUserName = orderUserName;
+    }
+
+    public String getOrderPubUserName() {
+        return orderPubUserName;
+    }
+
+    public void setOrderPubUserName(String orderPubUserName) {
+        this.orderPubUserName = orderPubUserName;
+    }
+
+    public String getOrderCommodityName() {
+        return orderCommodityName;
+    }
+
+    public void setOrderCommodityName(String orderCommodityName) {
+        this.orderCommodityName = orderCommodityName;
     }
 }

@@ -75,27 +75,27 @@
                 <div class="modal-body">
                     <input type="hidden" id="editUserId">
                     <div class="form-group">
-                        <label for="userName">用户名</label>
+                        <label for="editUserName">用户名</label>
                         <input type="text" class="form-control" id="editUserName" name="editUserName"
                                placeholder="用户名">
                     </div>
                     <div class="form-group">
-                        <label for="userPw">用户密码</label>
+                        <label for="editUserPw">用户密码</label>
                         <input type="password" class="form-control" id="editUserPw" name="editUserPw"
                                placeholder="用户密码">
                     </div>
                     <div class="form-group">
-                        <label for="userEmail">用户邮箱</label>
+                        <label for="editUserEmail">用户邮箱</label>
                         <input type="email" class="form-control" id="editUserEmail" name="editUserEmail"
                                placeholder="邮箱">
                     </div>
                     <div class="form-group">
-                        <label for="userAddr">用户地址</label>
+                        <label for="editUserAddr">用户地址</label>
                         <input type="email" class="form-control" id="editUserAddr" name="editUserAddr"
                                placeholder="用户地址">
                     </div>
                     <div class="form-group">
-                        <label for="userStatus">用户状态</label>
+                        <label for="editUserStatus">用户状态</label>
                         <select class="form-control" id="editUserStatus" name="editUserStatus">
                             <option value="1">VIP1</option>
                             <option value="2">VIP2</option>
@@ -103,7 +103,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="userMoney">金钱剩余总额</label>
+                        <label for="editUserMoney">金钱剩余总额</label>
                         <input type="text" class="form-control" name="editUserMoney" id="editUserMoney"
                                placeholder="金钱剩余总额">
                     </div>
@@ -344,31 +344,6 @@
         navTag.append(ulTag).appendTo(divTag);
     }
 
-    // //获取所有用户
-    // function getAllUser(selectId){
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/users",
-    //         type: "GET",
-    //         success: function(result) {
-    //             buildUserSelect(result,selectId)
-    //         }
-    //     });
-    // }
-    // //生成模态框用户下拉框内容
-    // function buildUserSelect(result,selectId){
-    //     var selectTag = $(selectId);
-    //     //清理下拉框
-    //     selectTag.empty();
-    //
-    //     $("<option></option>").appendTo(selectTag);
-    //
-    //     var users = result.data;
-    //     //生成下拉框中元素
-    //     $.each(users,function (index,user) {
-    //         var optionTag = $("<option value='"+ user.userId +"'>"+ user.userName +"</option>")
-    //         optionTag.appendTo(selectTag);
-    //     });
-    // }
     //新增用户请求
     function addUser(){
         var userName = $("#userName").val();

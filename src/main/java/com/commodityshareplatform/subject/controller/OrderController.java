@@ -33,7 +33,7 @@ public class OrderController {
     @RequestMapping(value = "orders", method = RequestMethod.GET)
     @ResponseBody
     public Result getAllOrders() {
-        List<Order> orders = orderService.selectAllOrder();
+        List<Order> orders = orderService.selectAllOrders();
         return ResultUtils.success(orders);
     }
 
@@ -41,9 +41,10 @@ public class OrderController {
      * 获取全部订单数据(分页)
      */
     @RequestMapping(value = "orderss", method = RequestMethod.GET)
+    @ResponseBody
     public Result<PageInfo> getAllOrderss(@RequestParam("pn") Integer pn) {
         PageHelper.startPage(pn, 5);
-        List<Order> orders = orderService.selectAllOrder();
+        List<Order> orders = orderService.selectAllOrders();
         PageInfo pageInfo = new PageInfo(orders, 5);
         return ResultUtils.success(pageInfo);
     }
