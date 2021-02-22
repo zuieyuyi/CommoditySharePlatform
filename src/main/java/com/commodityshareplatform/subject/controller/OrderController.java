@@ -9,10 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +44,26 @@ public class OrderController {
         List<Order> orders = orderService.selectAllOrders();
         PageInfo pageInfo = new PageInfo(orders, 5);
         return ResultUtils.success(pageInfo);
+    }
+
+    /**
+     * 添加订单
+     */
+    @RequestMapping(value = "order" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Result addOrder(Order order){
+        Integer result = orderService.insertOrder(order);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"订单添加失败添加失败");
+        }
+    }
+
+    @RequestMapping(value = "order/{orderId}",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getOrderById(@PathVariable("orderId") Integer orderId){
+        Order order = orderService.selectOrderById(orderId);
+        return ResultUtils.success(order);
     }
 }

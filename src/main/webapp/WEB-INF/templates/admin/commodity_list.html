@@ -56,7 +56,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改商品模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="updata_commodity_modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="update_commodity_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="commodityUpdate">
@@ -241,7 +241,7 @@
             //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn com_edit_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.commodityId)
-                .attr("data-toggle","modal").attr("data-target","#updata_commodity_modal");
+                .attr("data-toggle","modal").attr("data-target","#update_commodity_modal");
 
             //删除按钮
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn com_del_but").attr("aria-hidden", "true")

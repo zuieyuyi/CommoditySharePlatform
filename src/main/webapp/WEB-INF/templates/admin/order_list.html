@@ -14,39 +14,64 @@
                 </div>
                 <div class="modal-body">
 
-<!--                    <div class="form-group">-->
-<!--                        <label for="userName">用户名</label>-->
-<!--                        <input type="text" class="form-control" id="userName" name="userName"-->
-<!--                               placeholder="用户名">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userPw">用户密码</label>-->
-<!--                        <input type="password" class="form-control" id="userPw" name="userPw"-->
-<!--                               placeholder="用户密码">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userEmail">用户邮箱</label>-->
-<!--                        <input type="email" class="form-control" id="userEmail" name="userEmail"-->
-<!--                               placeholder="邮箱">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userAddr">用户地址</label>-->
-<!--                        <input type="email" class="form-control" id="userAddr" name="userAddr"-->
-<!--                               placeholder="用户地址">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userStatus">用户状态</label>-->
-<!--                        <select class="form-control" id="userStatus" name="userStatus">-->
-<!--                            <option value="1">VIP1</option>-->
-<!--                            <option value="2">VIP2</option>-->
-<!--                            <option value="3">VIP3</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userMoney">金钱剩余总额</label>-->
-<!--                        <input type="text" class="form-control" name="userMoney" id="userMoney"-->
-<!--                               placeholder="金钱剩余总额">-->
-<!--                    </div>-->
+                    <div class="form-group">
+                        <label for="orderName">订单名</label>
+                        <input type="text" class="form-control" id="orderName" name="orderName"
+                               placeholder="订单名">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderPubUserId">买家</label>
+                        <select class="form-control" id="orderPubUserId" name="orderPubUserId">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderUserId">卖家</label>
+                        <select class="form-control" id="orderUserId" name="orderUserId">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderCommodityId">商品</label>
+<!--                        <input type="text" class="form-control" id="orderCommodityId" name="orderCommodityId"-->
+<!--                               placeholder="商品">-->
+                        <select class="form-control" id="orderCommodityId" name="orderCommodityId">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderStatus">订单状态</label>
+                        <select class="form-control" id="orderStatus" name="orderStatus">
+                            <option value="1">支付中</option>
+                            <option value="2">确认出租</option>
+                            <option value="3">出租中</option>
+                            <option value="4">返还确认</option>
+                            <option value="5">订单完成</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderAddr">发送地址</label>
+                        <input type="text" class="form-control" id="orderAddr" name="orderAddr"
+                               placeholder="发送地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderArriveAdd">送达地址</label>
+                        <input type="text" class="form-control" id="orderArriveAddr" name="orderArriveAddr"
+                               placeholder="发送地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderBeginRentTime">租借开始时间</label>
+                        <input type="date" class="form-control" id="orderBeginRentTime" name="orderBeginRentTime"
+                               placeholder="1998-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderEndRentTime">租借结束时间</label>
+                        <input type="date" class="form-control" id="orderEndRentTime" name="orderEndRentTime"
+                               placeholder="1998-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderBackTime">返还时间</label>
+                        <input type="date" class="form-control" id="orderBackTime" name="orderBackTime"
+                               placeholder="1998-01-01">
+                    </div>
 <!--                    <div class="form-group">-->
 <!--                        <label for="exampleInputFile">商品图片</label>-->
 <!--                        <input type="file" id="exampleInputFile">-->
@@ -55,7 +80,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="addUser()">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="addOrder()">添加</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -63,50 +88,76 @@
 </div><!-- /.modal -->
 
 <!-- 修改用户模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="updata_order_modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="update_order_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="userUpdate">
+            <form id="orderUpdate">
                 <div class="modal-header">
                     <h4 class="modal-title">修改用户</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-<!--                    <input type="hidden" id="editUserId">-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userName">用户名</label>-->
-<!--                        <input type="text" class="form-control" id="editUserName" name="editUserName"-->
-<!--                               placeholder="用户名">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userPw">用户密码</label>-->
-<!--                        <input type="password" class="form-control" id="editUserPw" name="editUserPw"-->
-<!--                               placeholder="用户密码">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userEmail">用户邮箱</label>-->
-<!--                        <input type="email" class="form-control" id="editUserEmail" name="editUserEmail"-->
-<!--                               placeholder="邮箱">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userAddr">用户地址</label>-->
-<!--                        <input type="email" class="form-control" id="editUserAddr" name="editUserAddr"-->
-<!--                               placeholder="用户地址">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userStatus">用户状态</label>-->
-<!--                        <select class="form-control" id="editUserStatus" name="editUserStatus">-->
-<!--                            <option value="1">VIP1</option>-->
-<!--                            <option value="2">VIP2</option>-->
-<!--                            <option value="3">VIP3</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="userMoney">金钱剩余总额</label>-->
-<!--                        <input type="text" class="form-control" name="editUserMoney" id="editUserMoney"-->
-<!--                               placeholder="金钱剩余总额">-->
-<!--                    </div>-->
+                    <input type="hidden" id="editOrderId">
+
+                    <div class="form-group">
+                        <label for="editOrderName">订单名</label>
+                        <input type="text" class="form-control" id="editOrderName" name="orderName"
+                               placeholder="订单名">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderPubUserId">买家</label>
+                        <select class="form-control" id="editOrderPubUserId" name="orderPubUserId">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderUserId">卖家</label>
+                        <select class="form-control" id="editOrderUserId" name="orderUserId">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderCommodityId">商品</label>
+                        <!--                        <input type="text" class="form-control" id="orderCommodityId" name="orderCommodityId"-->
+                        <!--                               placeholder="商品">-->
+                        <select class="form-control" id="editOrderCommodityId" name="orderCommodityId">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editOrderStatus">订单状态</label>
+                        <select class="form-control" id="editOrderStatus" name="orderStatus">
+                            <option value="1">支付中</option>
+                            <option value="2">确认出租</option>
+                            <option value="3">出租中</option>
+                            <option value="4">返还确认</option>
+                            <option value="5">订单完成</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderAddr">发送地址</label>
+                        <input type="text" class="form-control" id="editOrderAddr" name="orderAddr"
+                               placeholder="发送地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderArriveAddr">送达地址</label>
+                        <input type="text" class="form-control" id="editOrderArriveAddr" name="orderArriveAddr"
+                               placeholder="发送地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderBeginRentTime">租借开始时间</label>
+                        <input type="date" class="form-control" id="editOrderBeginRentTime" name="orderBeginRentTime"
+                               placeholder="1998-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderEndRentTime">租借结束时间</label>
+                        <input type="date" class="form-control" id="editOrderEndRentTime" name="orderEndRentTime"
+                               placeholder="1998-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderBackTime">返还时间</label>
+                        <input type="date" class="form-control" id="editOrderBackTime" name="orderBackTime"
+                               placeholder="1998-01-01">
+                    </div>
                     <!--                    <div class="form-group">-->
                     <!--                        <label for="exampleInputFile">商品图片</label>-->
                     <!--                        <input type="file" id="exampleInputFile">-->
@@ -187,19 +238,23 @@
     //当前页
     var currentNum;
 
-    // // bindEditBut();
-    //
     //页面加载后执行
     $(document).ready(function () {
         toPage(1);
-    })
+        //模态框初始化
+        //用户初始化
+        getAllUser("#orderPubUserId","#orderUserId");
+        getAllUser("#editOrderPubUserId","#editOrderUserId");
+        //商品初始化
+        getAllCommodity("#orderCommodityId");
+    });
 
-    // //给编辑按钮添加事件
-    // $(document).on("click",".user_edit_but",function (){
-    //     //1、查出用户信息
-    //     getUserById($(this).attr("data-info"));
-    // });
-    //
+    //给编辑按钮添加事件
+    $(document).on("click",".order_edit_but",function (){
+        //1、查出用户信息
+        getOrderById($(this).attr("data-info"));
+    });
+
     // //删除按钮事件
     // $(document).on("click",".user_del_but",function () {
     //     var comf = confirm("是否删除id为" + $(this).attr("data-info") + "的这个用户")
@@ -248,7 +303,7 @@
             //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn order_edit_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.orderId)
-                .attr("data-toggle","modal").attr("data-target","#updata_order_modal");
+                .attr("data-toggle","modal").attr("data-target","#update_order_modal");
 
             //删除按钮
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn order_del_but").attr("aria-hidden", "true")
@@ -344,85 +399,136 @@
         navTag.append(ulTag).appendTo(divTag);
     }
 
-    // // //获取所有用户
-    // // function getAllUser(selectId){
-    // //     $.ajax({
-    // //         url: PROJECT_PATH+"/admin/users",
-    // //         type: "GET",
-    // //         success: function(result) {
-    // //             buildUserSelect(result,selectId)
-    // //         }
-    // //     });
-    // // }
-    // // //生成模态框用户下拉框内容
-    // // function buildUserSelect(result,selectId){
-    // //     var selectTag = $(selectId);
-    // //     //清理下拉框
-    // //     selectTag.empty();
-    // //
-    // //     $("<option></option>").appendTo(selectTag);
-    // //
-    // //     var users = result.data;
-    // //     //生成下拉框中元素
-    // //     $.each(users,function (index,user) {
-    // //         var optionTag = $("<option value='"+ user.userId +"'>"+ user.userName +"</option>")
-    // //         optionTag.appendTo(selectTag);
-    // //     });
-    // // }
-    // //新增订单请求
-    // function addUser(){
-    //     var userName = $("#userName").val();
-    //     var userPw = $("#userPw").val();
-    //     var userAddr = $("#userAddr").val();
-    //     var userEmail = $("#userEmail").val();
-    //     var userStatus = $("#userStatus").val();
-    //     var userMoney = $("#userMoney").val();
-    //
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/user",
-    //         dataType: "json",
-    //         data: {"userName":userName,
-    //             "userPw":userPw,
-    //             "userAddr":userAddr,
-    //             "userEmail":userEmail,
-    //             "userStatus":userStatus,
-    //             "userMoney":userMoney},
-    //         type: "POST",
-    //         success: function(result){
-    //             if (result.code == 10000){
-    //                 //关闭模态框
-    //                 $("#add_user_modal").modal("hide");
-    //                 //清空表单
-    //                 $("#userAdd")[0].reset();
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     })
-    // }
-    //
-    // //通过id从数据库中读取对应的数据
-    // function getUserById(userId) {
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/user/"+userId,
-    //         type: "GET",
-    //         success: function (result) {
-    //             //清空表单
-    //             $("#userUpdate")[0].reset();
-    //             //将获取的数据回显给表单
-    //             $("#editUserId").val(userId);
-    //             $("#editUserName").val(result.data.userName);
-    //             $("#editUserPw").val(result.data.userPw);
-    //             $("#editUserAddr").val(result.data.userAddr);
-    //             $("#editUserEmail").val(result.data.userEmail);
-    //             $("#editUserStatus").find("option[value="+result.data.userStatus+"]").attr("selected",'selected');
-    //             $("#editUserMoney").val(result.data.userMoney);
-    //         }
-    //     });
-    // }
-    //
+    //获取所有用户
+    function getAllUser(selectId,selectId2){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/users",
+            type: "GET",
+            success: function(result) {
+                buildUserSelect(result,selectId);
+                buildUserSelect(result,selectId2);
+            }
+        });
+    }
+    //生成模态框用户下拉框内容
+    function buildUserSelect(result,selectId){
+        var selectTag = $(selectId);
+        //清理下拉框
+        selectTag.empty();
+
+        $("<option></option>").appendTo(selectTag);
+
+        var users = result.data;
+        //生成下拉框中元素
+        $.each(users,function (index,user) {
+            var optionTag = $("<option value='"+ user.userId +"'>"+ user.userName +"</option>")
+            optionTag.appendTo(selectTag);
+        });
+    }
+
+    //获取所有商品的信息
+    function getAllCommodity(selectId){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/commodities",
+            type: "GET",
+            success: function(result) {
+                buildCommoditySelect(result,selectId);
+            }
+        })
+    }
+
+    function buildCommoditySelect(result,selectId) {
+        var selectTag = $(selectId);
+        //清理下拉框
+        selectTag.empty();
+
+        $("<option></option>").appendTo(selectTag);
+
+        var commodities = result.data.list;
+        //生成下拉框元素
+        $.each(commodities,function(index,commodity){
+            var optionTag = $("<option value='"+ commodity.commodityId +"'>"+ commodity.commodityName +"</option>")
+            optionTag.appendTo(selectTag);
+        });
+    }
+
+    //新增订单请求
+    function addOrder(){
+        var orderName = $("#orderName").val();
+        var orderPubUserId = $("#orderPubUserId").val();
+        var orderUserId = $("#orderUserId").val();
+        var orderCommodityId = $("#orderCommodityId").val();
+        var orderStatus = $("#orderStatus").val();
+        var orderAddr = $("#orderAddr").val();
+        var orderArriveAddr = $("#orderArriveAddr").val();
+        var orderBeginRentTime = dateReplace($("#orderBeginRentTime").val());
+        var orderEndRentTime = dateReplace($("#orderEndRentTime").val());
+        var orderBackTime = dateReplace($("#orderBackTime").val());
+
+        $.ajax({
+            url: PROJECT_PATH+"/admin/order",
+            dataType: "json",
+            data: {"orderName":orderName,
+                "orderPubUserId":orderPubUserId,
+                "orderUserId":orderUserId,
+                "orderCommodityId":orderCommodityId,
+                "orderStatus":orderStatus,
+                "orderAddr":orderAddr,
+                "orderArriveAddr":orderArriveAddr,
+                "orderBeginRentTime":orderBeginRentTime,
+                "orderEndRentTime":orderEndRentTime,
+                "orderBackTime":orderBackTime},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    //关闭模态框
+                    $("#add_order_modal").modal("hide");
+                    //清空表单
+                    $("#orderAdd")[0].reset();
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        })
+    }
+
+    function dateReplace(date){
+        // date.replace("/","-");
+        return date;
+    }
+
+    //通过id从数据库中读取对应的数据
+    function getOrderById(orderId) {
+        $.ajax({
+            url: PROJECT_PATH+"/admin/order/"+orderId,
+            type: "GET",
+            success: function (result) {
+                //清空表单
+                $("#orderUpdate")[0].reset();
+                //将获取的数据回显给表单
+                $("#editOrderId").val(orderId);
+                $("#editOrderName").val(result.data.orderName);
+                // $("#editOrderPubUserId").val(result.data.orderPubUserId);
+                $("#editOrderPubUserId").find("option[value="+result.data.orderPubUserId+"]").attr("selected",'selected');
+                // $("#editOrderUserId").val(result.data.orderUserId);
+                $("#editOrderUserId").find("option[value="+result.data.orderUserId+"]").attr("selected",'selected');
+                // $("#editOrderCommodityId").val(result.data.orderCommodityId);
+                $("#editOrderCommodityId").find("option[value="+result.data.orderCommodityId+"]").attr("selected",'selected');
+                // $("#editOrderStatus").val(result.data.orderStatus);
+                $("#editOrderStatus").find("option[value="+result.data.orderStatus+"]").attr("selected",'selected');
+                $("#editOrderAddr").val(result.data.orderAddr);
+                $("#editOrderArriveAddr").val(result.data.orderArriveAddr);
+                $("#editOrderBeginRentTime").val(result.data.orderBeginRentTime);
+                $("#editOrderEndRentTime").val(result.data.orderEndRentTime);
+                $("#editOrderBackTime").val(result.data.orderBackTime);
+                // $("#editUserStatus").find("option[value="+result.data.userStatus+"]").attr("selected",'selected');
+                // $("#editUserMoney").val(result.data.userMoney);
+            }
+        });
+    }
+
     // //保存用户请求
     // function updataUser(){
     //     var userId = $("#editUserId").val()

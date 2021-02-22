@@ -1,5 +1,8 @@
 package com.commodityshareplatform.subject.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Order extends OrderKey {
@@ -16,17 +19,20 @@ public class Order extends OrderKey {
     private String orderCode;
 
     private Integer orderStatus;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date orderCreateDate;
 
     private String orderAddr;
 
     private String orderArriveAddr;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderBeginRentTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderEndRentTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderBackTime;
 
     private Integer isValid;

@@ -63,7 +63,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改用户模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="updata_user_modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="update_user_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="userUpdate">
@@ -248,7 +248,7 @@
             //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn user_edit_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.userId)
-                .attr("data-toggle","modal").attr("data-target","#updata_user_modal");
+                .attr("data-toggle","modal").attr("data-target","#update_user_modal");
 
             //删除按钮
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn user_del_but").attr("aria-hidden", "true")

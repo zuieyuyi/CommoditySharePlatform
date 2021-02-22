@@ -1,9 +1,6 @@
 package com.commodityshareplatform.subject.service.impl;
 
-import com.commodityshareplatform.subject.bean.Commodity;
-import com.commodityshareplatform.subject.bean.Order;
-import com.commodityshareplatform.subject.bean.OrderExample;
-import com.commodityshareplatform.subject.bean.User;
+import com.commodityshareplatform.subject.bean.*;
 import com.commodityshareplatform.subject.dao.CommodityMapper;
 import com.commodityshareplatform.subject.dao.OrderMapper;
 import com.commodityshareplatform.subject.dao.UserMapper;
@@ -15,7 +12,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class OrderService implements IOrderService {
@@ -108,6 +107,22 @@ public class OrderService implements IOrderService {
 
     @Override
     public Integer insertOrder(Order order) {
+        Date date = new Date();
+        String orderCode;
+        long count = 0;
+
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        //订单编号根据时间+三位随机数生成订单编号
+        do{
+            Integer number = (int) (Math.random() * 1000);
+            orderCode = date.getTime()+number+"";
+            criteria.andOrderCodeEqualTo(orderCode);
+            count = orderMapper.countByExample(orderExample);
+        }while (count != 0);
+
+        order.setOrderCode(orderCode);
+        order.setOrderCreateDate(date);
         int result = orderMapper.insertSelective(order);
         return result;
     }
