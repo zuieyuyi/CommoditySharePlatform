@@ -60,10 +60,41 @@ public class OrderController {
         }
     }
 
+    /**
+     * 通过Id查询对应的订单
+     */
     @RequestMapping(value = "order/{orderId}",method = RequestMethod.GET)
     @ResponseBody
     public Result getOrderById(@PathVariable("orderId") Integer orderId){
         Order order = orderService.selectOrderById(orderId);
         return ResultUtils.success(order);
+    }
+
+    /**
+     * 保存修改的订单
+     */
+    @RequestMapping(value = "order",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result saveOrder(Order order){
+        Integer result = orderService.updateOrder(order);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"订单保存失败添加失败");
+        }
+    }
+
+    /**
+     * 删除订单
+     */
+    @RequestMapping(value = "order/{orderId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Result deleteOrder(@PathVariable("orderId") Integer orderId){
+        Integer result = orderService.deleteOrderById(orderId);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"订单保存失败添加失败");
+        }
     }
 }

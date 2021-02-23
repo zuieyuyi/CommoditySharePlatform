@@ -87,22 +87,36 @@ public class OrderService implements IOrderService {
             rollbackFor = {Exception.class})
     @Override
     public Integer deleteOrderById(Integer id) {
-//        OrderExample orderExample = new OrderExample();
-//        OrderExample.Criteria criteria = orderExample.createCriteria();
-//        criteria.andOrderIdEqualTo(id);
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andOrderIdEqualTo(id);
+
         Order order = selectOrderById(id);
         order.setIsValid(0);
-        int result = orderMapper.updateByExample(order, null);
+        int result = orderMapper.updateByExample(order, orderExample);
         return result;
     }
 
     @Override
     public Integer updateOrder(Order order) {
-//        OrderExample orderExample = new OrderExample();
-//        OrderExample.Criteria criteria = orderExample.createCriteria();
-//        criteria.andOrderIdEqualTo(order.getOrderId());
-        orderMapper.updateByExample(order,null);
-        return null;
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andOrderIdEqualTo(order.getOrderId());
+
+        Order order1 = selectOrderById(order.getOrderId());
+        order1.setOrderName(order.getOrderName());
+        order.setOrderPubUserId(order.getOrderPubUserId());
+        order.setOrderUserId(order.getOrderUserId());
+        order.setOrderCommodityId(order.getOrderCommodityId());
+        order.setOrderStatus(order.getOrderStatus());
+        order.setOrderAddr(order.getOrderAddr());
+        order.setOrderArriveAddr(order.getOrderArriveAddr());
+        order.setOrderBeginRentTime(order.getOrderBeginRentTime());
+        order.setOrderEndRentTime(order.getOrderEndRentTime());
+        order.setOrderBackTime(order.getOrderBackTime());
+
+        int result = orderMapper.updateByExample(order1, orderExample);
+        return result;
     }
 
     @Override
