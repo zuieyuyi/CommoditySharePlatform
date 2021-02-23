@@ -6,7 +6,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="add_order_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="userAdd">
+            <form id="orderAdd">
                 <div class="modal-header">
                     <h4 class="modal-title">添加订单</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -53,7 +53,7 @@
                                placeholder="发送地址">
                     </div>
                     <div class="form-group">
-                        <label for="orderArriveAdd">送达地址</label>
+                        <label for="orderArriveAddr">送达地址</label>
                         <input type="text" class="form-control" id="orderArriveAddr" name="orderArriveAddr"
                                placeholder="发送地址">
                     </div>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="comSaveBut" class="btn btn-primary" onclick="updataUser()">保存</button>
+                    <button type="button" id="comSaveBut" class="btn btn-primary" onclick="updateOrder()">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -247,6 +247,7 @@
         getAllUser("#editOrderPubUserId","#editOrderUserId");
         //商品初始化
         getAllCommodity("#orderCommodityId");
+        getAllCommodity("#editOrderCommodityId");
     });
 
     //给编辑按钮添加事件
@@ -255,13 +256,13 @@
         getOrderById($(this).attr("data-info"));
     });
 
-    // //删除按钮事件
-    // $(document).on("click",".user_del_but",function () {
-    //     var comf = confirm("是否删除id为" + $(this).attr("data-info") + "的这个用户")
-    //     if (comf == true){
-    //         delUser($(this).attr("data-info"));
-    //     }
-    // });
+    //删除按钮事件
+    $(document).on("click",".order_del_but",function () {
+        var comf = confirm("是否删除id为" + $(this).attr("data-info") + "的这个订单")
+        if (comf == true){
+            delOrder($(this).attr("data-info"));
+        }
+    });
 
     //发送请求获取那一页数据
     function toPage(pn) {
@@ -510,80 +511,82 @@
                 //将获取的数据回显给表单
                 $("#editOrderId").val(orderId);
                 $("#editOrderName").val(result.data.orderName);
-                // $("#editOrderPubUserId").val(result.data.orderPubUserId);
-                $("#editOrderPubUserId").find("option[value="+result.data.orderPubUserId+"]").attr("selected",'selected');
-                // $("#editOrderUserId").val(result.data.orderUserId);
+                $("#editOrderPubUserId").find("option[value="+result.data.orderPubUserId+"]").attr("selected",'selected');;
                 $("#editOrderUserId").find("option[value="+result.data.orderUserId+"]").attr("selected",'selected');
-                // $("#editOrderCommodityId").val(result.data.orderCommodityId);
                 $("#editOrderCommodityId").find("option[value="+result.data.orderCommodityId+"]").attr("selected",'selected');
-                // $("#editOrderStatus").val(result.data.orderStatus);
                 $("#editOrderStatus").find("option[value="+result.data.orderStatus+"]").attr("selected",'selected');
                 $("#editOrderAddr").val(result.data.orderAddr);
                 $("#editOrderArriveAddr").val(result.data.orderArriveAddr);
                 $("#editOrderBeginRentTime").val(result.data.orderBeginRentTime);
                 $("#editOrderEndRentTime").val(result.data.orderEndRentTime);
                 $("#editOrderBackTime").val(result.data.orderBackTime);
-                // $("#editUserStatus").find("option[value="+result.data.userStatus+"]").attr("selected",'selected');
-                // $("#editUserMoney").val(result.data.userMoney);
             }
         });
     }
 
-    // //保存用户请求
-    // function updataUser(){
-    //     var userId = $("#editUserId").val()
-    //     var userName = $("#editUserName").val();
-    //     var userPw = $("#editUserPw").val();
-    //     var userAddr = $("#editUserAddr").val();
-    //     var userEmail = $("#editUserEmail").val();
-    //     var userStatus = $("#editUserStatus").val();
-    //     var userMoney = $("#editUserMoney").val();
-    //
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/user",
-    //         dataType: "json",
-    //         data: {"_method":"PUT",
-    //             "userId":userId,
-    //             "userName":userName,
-    //             "userPw":userPw,
-    //             "userAddr":userAddr,
-    //             "userEmail":userEmail,
-    //             "userStatus":userStatus,
-    //             "userMoney":userMoney},
-    //         type: "POST",
-    //         success: function(result){
-    //             if (result.code == 10000){
-    //                 //关闭模态框
-    //                 $("#updata_user_modal").modal("hide");
-    //                 //清空表单
-    //                 $("#userAdd")[0].reset();
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     });
-    // }
-    //
-    // //删除用户请求
-    // function delUser(userId){
-    //     $.ajax({
-    //         url: PROJECT_PATH+"/admin/user/"+userId,
-    //         data: {"_method":"DELETE"},
-    //         type: "POST",
-    //         success: function (result) {
-    //             if (result.code == 10000){
-    //                 //弹窗提示删除成功
-    //                 alert("删除成功");
-    //                 //刷新页面
-    //                 toPage(currentNum);
-    //             }else{
-    //                 alert(result.msg);
-    //             }
-    //         }
-    //     })
-    // }
+    //保存订单请求
+    function updateOrder(){
+        var orderId = $("#editOrderId").val()
+        var orderName = $("#orderName").val();
+        var orderPubUserId = $("#orderPubUserId").val();
+        var orderUserId = $("#orderUserId").val();
+        var orderCommodityId = $("#orderCommodityId").val();
+        var orderStatus = $("#orderStatus").val();
+        var orderAddr = $("#orderAddr").val();
+        var orderArriveAddr = $("#orderArriveAddr").val();
+        var orderBeginRentTime = dateReplace($("#orderBeginRentTime").val());
+        var orderEndRentTime = dateReplace($("#orderEndRentTime").val());
+        var orderBackTime = dateReplace($("#orderBackTime").val());
+
+        $.ajax({
+            url: PROJECT_PATH+"/admin/order",
+            dataType: "json",
+            data: {"_method":"PUT",
+                "orderId":orderId,
+                "orderName":orderName,
+                "orderPubUserId":orderPubUserId,
+                "orderUserId":orderUserId,
+                "orderCommodityId":orderCommodityId,
+                "orderStatus":orderStatus,
+                "orderAddr":orderAddr,
+                "orderArriveAddr":orderArriveAddr,
+                "orderBeginRentTime":orderBeginRentTime,
+                "orderEndRentTime":orderEndRentTime,
+                "orderBackTime":orderBackTime},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    //关闭模态框
+                    $("#update_order_modal").modal("hide");
+                    //清空表单
+                    $("#orderUpdate")[0].reset();
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+    }
+
+    //删除订单请求
+    function delOrder(orderId){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/order/"+orderId,
+            data: {"_method":"DELETE"},
+            type: "POST",
+            success: function (result) {
+                if (result.code == 10000){
+                    //弹窗提示删除成功
+                    alert("删除成功");
+                    //刷新页面
+                    toPage(currentNum);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        })
+    }
     /*]]>*/
 </script>
 </html>

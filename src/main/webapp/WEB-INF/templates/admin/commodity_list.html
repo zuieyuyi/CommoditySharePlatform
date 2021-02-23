@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="comSaveBut" class="btn btn-primary" onclick="updataCommodity()">保存</button>
+                    <button type="button" id="comSaveBut" class="btn btn-primary" onclick="updateCommodity()">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -423,7 +423,7 @@
     }
 
     //修改商品请求
-    function updataCommodity(){
+    function updateCommodity(){
         var commodityId = $("#editComId").val();
         var commodityName = $("#editComName").val();
         var commodityStatus = $("#editComStatus").val();
