@@ -35,6 +35,13 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.commodityshareplatform.subject.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
     <mvc:annotation-driven></mvc:annotation-driven>
