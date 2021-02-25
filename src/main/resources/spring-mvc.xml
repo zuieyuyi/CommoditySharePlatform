@@ -38,8 +38,12 @@
     
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/login"/>
             <bean class="com.commodityshareplatform.subject.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.commodityshareplatform.subject.interceptor.OnlineInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

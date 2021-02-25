@@ -16,6 +16,7 @@
 <body class="text-center">
 <form class="form-signin" action="dashboard.html" th:action="@{/login}" method="post">
     <h1 class="h3 mb-3 font-weight-normal">商品共享平台</h1>
+    <span style="color:red" th:if="${#session.getAttribute('msg') != null}" th:text="${#session.getAttribute('msg')}"></span>
     <label class="sr-only">用户名</label>
     <input type="text" name="username" class="form-control" placeholder="用户名" required="" autofocus="">
     <label class="sr-only">密码</label>

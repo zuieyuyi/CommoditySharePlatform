@@ -5,9 +5,11 @@ import com.commodityshareplatform.subject.bean.AdminExample;
 import com.commodityshareplatform.subject.dao.AdminMapper;
 import com.commodityshareplatform.subject.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LoginServiceImpl implements ILoginService {
     @Autowired
     AdminMapper adminMapper;
