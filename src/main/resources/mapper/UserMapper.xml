@@ -15,7 +15,7 @@
     <result column="USER_COLLECT" jdbcType="VARCHAR" property="userCollect" />
     <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
     <result column="USER_STATUS" jdbcType="INTEGER" property="userStatus" />
-    <result column="USER_CEARTE_DATE" jdbcType="DATE" property="userCearteDate" />
+    <result column="USER_CREATE_DATE" jdbcType="DATE" property="userCreateDate" />
     <result column="USER_IS_ADMIN" jdbcType="INTEGER" property="userIsAdmin" />
     <result column="USER_MONEY" jdbcType="DECIMAL" property="userMoney" />
     <result column="IS_VALID" jdbcType="INTEGER" property="isValid" />
@@ -103,7 +103,7 @@
       This element was generated on Fri Feb 12 16:54:45 CST 2021.
     -->
     USER_ID, USER_NAME, USER_PW, USER_BUY, USER_ADDR, USER_COLLECT, USER_EMAIL, USER_STATUS,
-    USER_CEARTE_DATE, USER_IS_ADMIN, USER_MONEY, IS_VALID
+    USER_CREATE_DATE, USER_IS_ADMIN, USER_MONEY, IS_VALID
   </sql>
   <sql id="Blob_Column_List">
     <!--
@@ -172,12 +172,12 @@
     -->
     insert into t_user (USER_ID, USER_NAME, USER_PW,
       USER_BUY, USER_ADDR, USER_COLLECT,
-      USER_EMAIL, USER_STATUS, USER_CEARTE_DATE,
+      USER_EMAIL, USER_STATUS, USER_CREATE_DATE,
       USER_IS_ADMIN, USER_MONEY, IS_VALID,
       USER_DETAILS)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPw,jdbcType=VARCHAR},
       #{userBuy,jdbcType=VARCHAR}, #{userAddr,jdbcType=VARCHAR}, #{userCollect,jdbcType=VARCHAR},
-      #{userEmail,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}, #{userCearteDate,jdbcType=DATE},
+      #{userEmail,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}, #{userCreateDate,jdbcType=DATE},
       #{userIsAdmin,jdbcType=INTEGER}, #{userMoney,jdbcType=DECIMAL}, #{isValid,jdbcType=INTEGER},
       #{userDetails,jdbcType=LONGVARCHAR})
   </insert>
@@ -213,8 +213,8 @@
       <if test="userStatus != null">
         USER_STATUS,
       </if>
-      <if test="userCearteDate != null">
-        USER_CEARTE_DATE,
+      <if test="userCreateDate != null">
+        USER_CREATE_DATE,
       </if>
       <if test="userIsAdmin != null">
         USER_IS_ADMIN,
@@ -254,8 +254,8 @@
       <if test="userStatus != null">
         #{userStatus,jdbcType=INTEGER},
       </if>
-      <if test="userCearteDate != null">
-        #{userCearteDate,jdbcType=DATE},
+      <if test="userCreateDate != null">
+        #{userCreateDate,jdbcType=DATE},
       </if>
       <if test="userIsAdmin != null">
         #{userIsAdmin,jdbcType=INTEGER},
@@ -314,8 +314,8 @@
       <if test="record.userStatus != null">
         USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
       </if>
-      <if test="record.userCearteDate != null">
-        USER_CEARTE_DATE = #{record.userCearteDate,jdbcType=DATE},
+      <if test="record.userCreateDate != null">
+        USER_CREATE_DATE = #{record.userCreateDate,jdbcType=DATE},
       </if>
       <if test="record.userIsAdmin != null">
         USER_IS_ADMIN = #{record.userIsAdmin,jdbcType=INTEGER},
@@ -349,7 +349,7 @@
       USER_COLLECT = #{record.userCollect,jdbcType=VARCHAR},
       USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
       USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
-      USER_CEARTE_DATE = #{record.userCearteDate,jdbcType=DATE},
+      USER_CREATE_DATE = #{record.userCreateDate,jdbcType=DATE},
       USER_IS_ADMIN = #{record.userIsAdmin,jdbcType=INTEGER},
       USER_MONEY = #{record.userMoney,jdbcType=DECIMAL},
       IS_VALID = #{record.isValid,jdbcType=INTEGER},
@@ -373,7 +373,7 @@
       USER_COLLECT = #{record.userCollect,jdbcType=VARCHAR},
       USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
       USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
-      USER_CEARTE_DATE = #{record.userCearteDate,jdbcType=DATE},
+      USER_CREATE_DATE = #{record.userCreateDate,jdbcType=DATE},
       USER_IS_ADMIN = #{record.userIsAdmin,jdbcType=INTEGER},
       USER_MONEY = #{record.userMoney,jdbcType=DECIMAL},
       IS_VALID = #{record.isValid,jdbcType=INTEGER}

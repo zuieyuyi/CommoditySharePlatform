@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/admin/index::header}"></div>
+<body>
+<div class="row">
+    <div class="col-md-10">
+        <h2>订单详情页面</h2>
+    </div>
+    <div class="col-md-2">
+        <a th:href="@{/admin/to_orders}" class="btn btn-default" role="button">
+            <span style="color:gray">返回</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover" id="order_table">
+            <tr id="id">
+                <th>Id</th>
+                <th>[[${order == null?"":order.orderId}]]</th>
+            </tr>
+            <tr id="orderName">
+                <th>订单名</th>
+                <th>[[${order == null?"":order.orderName}]]</th>
+            </tr>
+            <tr id="orderPubUserName">
+                <th>买家用户</th>
+                <th>[[${order == null?"":order.orderPubUserName}]]</th>
+            </tr>
+            <tr id="orderUserName">
+                <th>卖家用户</th>
+                <th>[[${order == null?"":order.orderUserName}]]</th>
+            </tr>
+            <tr id="orderCommodityName">
+                <th>商品名</th>
+                <th>[[${order == null?"":order.orderCommodityName}]]</th>
+            </tr>
+            <tr id="orderCode">
+                <th>订单编号</th>
+                <th>[[${order == null?"":order.orderCode}]]</th>
+            </tr>
+            <tr id="orderStatusMsg">
+                <th>订单状态</th>
+                <th>[[${order == null?"":order.orderStatusMsg}]]</th>
+            </tr>
+            <tr id="orderAddr">
+                <th>订单发送地址</th>
+                <th>[[${order == null?"":order.orderAddr}]]</th>
+            </tr>
+            <tr id="orderArriveAddr">
+                <th>订单送达地址</th>
+                <th>[[${order == null?"":order.orderArriveAddr}]]</th>
+            </tr>
+            <tr id="orderBeginRentTime">
+                <th>租借开始时间</th>
+                <th>[[${order == null?"":#dates.format(order.orderBeginRentTime,"yyyy-MM-dd")}]]</th>
+            </tr>
+            <tr id="orderEndRentTime">
+                <th>租借结束时间</th>
+                <th>[[${order == null?"":#dates.format(order.orderEndRentTime,"yyyy-MM-dd")}]]</th>
+            </tr>
+            <tr id="orderBackTime">
+                <th>租借结束时间</th>
+                <th>[[${order == null?"":#dates.format(order.orderBackTime,"yyyy-MM-dd")}]]</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:replace="~{/admin/index::js}"></div>
+</body>
+</html>

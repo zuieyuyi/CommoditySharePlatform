@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +30,18 @@ public class CommodityController {
     @RequestMapping("to_commodities")
     public String toCommoditiesPage(){
         return "admin/commodity_list";
+    }
+
+    /**
+     * 跳转商品详情页面
+     */
+    @RequestMapping(value = "to_commodity_select/{commodityId}",method = RequestMethod.GET)
+    public ModelAndView toCommoditySelect(@PathVariable("commodityId") Integer commodityId){
+        Commodity commodity = commodityService.selectCommodityById(commodityId);
+
+        ModelAndView mv = new ModelAndView("admin/commodity_select");
+        mv.addObject("commodity",commodity);
+        return mv;
     }
 
     /**

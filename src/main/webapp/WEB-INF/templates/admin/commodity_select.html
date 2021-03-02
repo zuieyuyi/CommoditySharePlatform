@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/admin/index::header}"></div>
+<body>
+<div class="row">
+    <div class="col-md-10">
+        <h2>商品详情页面</h2>
+    </div>
+    <div class="col-md-2">
+        <a th:href="@{/admin/to_commodities}" class="btn btn-default" role="button">
+            <span style="color:gray">返回</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover" id="commodity_table">
+            <tr id="id">
+                <th>Id</th>
+                <th>[[${commodity == null?"":commodity.commodityId}]]</th>
+            </tr>
+            <tr id="commodityName">
+                <th>商品名</th>
+                <th>[[${commodity == null?"":commodity.commodityName}]]</th>
+            </tr>
+            <tr id="commodityStatus">
+                <th>商品状态</th>
+                <th>[[${commodity == null?"":commodity.commodityStatus}]]</th>
+            </tr>
+            <tr id="commodityNum">
+                <th>商品数量</th>
+                <th>[[${commodity == null?"":commodity.commodityNum}]]</th>
+            </tr>
+            <tr id="commodityUser">
+                <th>发布用户</th>
+                <th>[[${commodity == null?"":commodity.commodityUserName}]]</th>
+            </tr>
+            <tr id="commodityTags">
+                <th>商品类型标签</th>
+                <th>[[${commodity == null?"":commodity.commodityTag}]]</th>
+            </tr>
+            <tr id="commodityQuality">
+                <th>商品质量</th>
+                <th>[[${commodity == null?"":commodity.commodityQuality}]]</th>
+            </tr>
+            <tr id="commodityDetails">
+                <th>商品介绍</th>
+                <th>[[${commodity == null?"":commodity.commodityDetails}]]</th>
+            </tr>
+            <tr id="commodityCreateDate">
+                <th>创建日期</th>
+                <th>[[${commodity == null?"":commodity.commodityCreateDate}]]</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:replace="~{/admin/index::js}"></div>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function(){
+        // getCommodityById()
+    });
+
+    //通过id从数据库中读取对应的数据
+    function getCommodityById(commodityId) {
+        $.ajax({
+            url: PROJECT_PATH+"/admin/commodity/"+commodityId,
+            type: "GET",
+            success: function (result) {
+                var result = result.data.list;
+
+                //创建元素
+                var idTh = $("<th></th>").append(result.commodityId);
+                var commodityNameTh = $("<th></th>").append(result.commodityName);
+                var commodityStatusTh = $("<th></th>").append(result.commodityStatusMsg);
+                var commodityNumTh = $("<th></th>").append(result.commodityNum);
+                var commodityUserTh = $("<th></th>").append(result.commodityUserName);
+                var commodityTagsTh = $("<th></th>").append(result.commodityTag);
+                var commodityQualityTh = $("<th></th>").append(result.commodityQuality);
+                var commodityDetailsTh = $("<th></th>").append(result.commodityDetails);
+                var commodityCreateDateTh = $("<th></th>".append(result.commodityCreateDate));
+
+                $("#id").append(idTh);
+                $("#commodityName").append(commodityNameTh);
+                $("#commodityStatus").append(commodityStatusTh);
+                $("#commodityNum").append(commodityNumTh);
+                $("#commodityUser").append(commodityUserTh);
+                $("#commodityTags").append(commodityTagsTh);
+                $("#commodityQuality").append(commodityQualityTh);
+                $("#commodityDetails").append(commodityDetailsTh);
+                $("#commodityCreateDate").append(commodityCreateDateTh);
+            }
+        });
+    }
+    /*]]>*/
+</script>
+</html>

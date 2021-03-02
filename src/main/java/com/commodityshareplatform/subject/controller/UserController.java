@@ -1,7 +1,9 @@
 package com.commodityshareplatform.subject.controller;
 
+import com.commodityshareplatform.subject.bean.Commodity;
 import com.commodityshareplatform.subject.bean.User;
 import com.commodityshareplatform.subject.service.IUserService;
+import com.commodityshareplatform.subject.service.impl.UserService;
 import com.commodityshareplatform.subject.utils.Result;
 import com.commodityshareplatform.subject.utils.ResultUtils;
 import com.github.pagehelper.Page;
@@ -10,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -25,6 +28,15 @@ public class UserController {
     @RequestMapping("to_users")
     public String toUsersPage(){
         return "admin/user_list";
+    }
+
+    @RequestMapping(value = "to_user_select/{userId}",method = RequestMethod.GET)
+    public ModelAndView toUserSelect(@PathVariable("userId") Integer userId){
+        User user = userService.selectUserById(userId);
+
+        ModelAndView mv = new ModelAndView("admin/user_select");
+        mv.addObject("user",user);
+        return mv;
     }
 
     /**

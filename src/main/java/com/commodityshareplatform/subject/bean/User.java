@@ -21,7 +21,7 @@ public class User {
 
     private Integer userStatus;
 
-    private Date userCearteDate;
+    private Date userCreateDate;
 
     private Integer userIsAdmin;
 
@@ -97,12 +97,12 @@ public class User {
         this.userStatus = userStatus;
     }
 
-    public Date getUserCearteDate() {
-        return userCearteDate;
+    public Date getUserCreateDate() {
+        return userCreateDate;
     }
 
-    public void setUserCearteDate(Date userCearteDate) {
-        this.userCearteDate = userCearteDate;
+    public void setUserCreateDate(Date userCreateDate) {
+        this.userCreateDate = userCreateDate;
     }
 
     public Integer getUserIsAdmin() {

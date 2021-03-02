@@ -13,11 +13,11 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="form-group">
                         <label for="commodityName">商品名</label>
                         <input type="text" class="form-control" id="commodityName" name="commodityName" placeholder="商品名">
                     </div>
+                    <span style="color:red" class="valid-commodityName"></span>
                     <div class="form-group">
                         <label for="commodityStatus">商品状态</label>
                         <select class="form-control" id="commodityStatus" name="commodityStatus">
@@ -26,20 +26,24 @@
                             <option value="200" >售罄</option>
                         </select>
                     </div>
+                    <span style="color:red" class="valid-commodityStatus"></span>
                     <div class="form-group">
                         <label for="commodityNum">商品数量</label>
                         <input type="number" class="form-control" id="commodityNum" name="commodityNum" placeholder="商品数量">
                     </div>
+                    <span style="color:red" class="valid-commodityNum"></span>
                     <div class="form-group">
                         <label for="commodityUserId">发布用户</label>
                         <select class="form-control" id="commodityUserId" name="commodityUserId">
 
                         </select>
                     </div>
+                    <span style="color:red" class="valid-commodityUserId"></span>
                     <div class="form-group">
                         <label for="commodityQuality">商品质量</label>
                         <input type="text" class="form-control" name="commodityQuality" id="commodityQuality" placeholder="商品质量">
                     </div>
+                    <span style="color:red" class="valid-commodityQuality"></span>
 <!--                    <div class="form-group">-->
 <!--                        <label for="exampleInputFile">商品图片</label>-->
 <!--                        <input type="file" id="exampleInputFile">-->
@@ -72,6 +76,7 @@
                         <label for="editComName">商品名</label>
                         <input type="text" id="editComName" class="form-control" name="commodityName" placeholder="商品名">
                     </div>
+                    <span style="color:red" class="valid-commodityName"></span>
                     <div class="form-group">
                         <label for="editComStatus">商品状态</label>
                         <select id="editComStatus" class="form-control" name="commodityStatus">
@@ -80,20 +85,24 @@
                             <option value="200" >售罄</option>
                         </select>
                     </div>
+                    <span style="color:red" class="valid-commodityStatus"></span>
                     <div class="form-group">
                         <label for="editComNum">商品数量</label>
                         <input id="editComNum" type="number" class="form-control" name="commodityNum" placeholder="商品数量">
                     </div>
+                    <span style="color:red" class="valid-commodityNum"></span>
                     <div class="form-group">
                         <label for="editComUserId">发布用户</label>
                         <select id="editComUserId" class="form-control" name="commodityUserId">
 
                         </select>
                     </div>
+                    <span style="color:red" class="valid-commodityUserId"></span>
                     <div class="form-group">
                         <label FOR="editComQuality">商品质量</label>
                         <input id="editComQuality" type="text" class="form-control" name="commodityQuality" placeholder="商品质量">
                     </div>
+                    <span style="color:red" class="valid-commodityQuality"></span>
                     <!--                    <div class="form-group">-->
                     <!--                        <label for="exampleInputFile">商品图片</label>-->
                     <!--                        <input type="file" id="exampleInputFile">-->
@@ -174,15 +183,21 @@
     //当前页
     var currentNum;
 
-    // bindEditBut();
-
     //页面加载后执行
     $(document).ready(function () {
         toPage(1);
         // 模态框初始化
         getAllUser("#commodityUserId");
         getAllUser("#editComUserId");
+        //验证数据方法加载
+        validateCommodity();
     })
+
+    //查看按钮事件
+    $(document).on("click",".com_select_but",function(){
+        var commodityId = $(this).attr("data-info");
+        window.location.href = PROJECT_PATH + "/admin/to_commodity_select/" + commodityId;
+    });
 
     //给编辑按钮添加事件
     $(document).on("click",".com_edit_but",function (){
@@ -238,6 +253,9 @@
             var comQualityElm = $("<td></td>").append(item.commodityQuality);
             var comCreateDateElm = $("<td></td>").append(item.commodityCreateDate);
             var comOperateElm = $("<td></td>").append();
+            //查看按钮
+            var selectBtntd = $("<button></button>").addClass("btn btn-success btn-sm select_btn com_select_but").attr("aria-hidden", "true")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("查看").attr("data-info",item.commodityId)
             //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn com_edit_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.commodityId)
@@ -247,7 +265,7 @@
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn com_del_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除").attr("data-info",item.commodityId);
 
-            comOperateElm.append(editButTd).append(" ").append(delButTd);
+            comOperateElm.append(selectBtntd).append(" ").append(editButTd).append(" ").append(delButTd);
 
             $("<tr></tr>").append(checkBox).append(comIdElm).append(comNameElm).append(comStatusElm)
                 .append(comNumElm).append(comUserElm).append(comQualityElm).append(comCreateDateElm).append(comOperateElm)
@@ -477,6 +495,16 @@
             }
         })
     }
+
+    // function validateCommodity(){
+    //     $("#commodityName").change(function(){
+    //         // debugger;
+    //         var commodiyName = $("#commodityName").val();
+    //         if (valiDateLength(commodiyName,2,8)){
+    //             $(".valid-commodityName").val("商品名长度要在2-8之间");
+    //         }
+    //     });
+    // }
     /*]]>*/
 </script>
 </html>

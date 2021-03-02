@@ -6,7 +6,8 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="add_order_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="orderAdd">
+            <form id="order
+            Add">
                 <div class="modal-header">
                     <h4 class="modal-title">添加订单</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -250,6 +251,12 @@
         getAllCommodity("#editOrderCommodityId");
     });
 
+    //查看按钮事件
+    $(document).on("click",".order_select_but",function(){
+        var orderId = $(this).attr("data-info");
+        window.location.href = PROJECT_PATH + "/admin/to_order_select/" + orderId;
+    });
+
     //给编辑按钮添加事件
     $(document).on("click",".order_edit_but",function (){
         //1、查出用户信息
@@ -301,6 +308,10 @@
             var orderStatusElm = $("<td></td>").append(item.orderStatusMsg);
 
             var userOperateElm = $("<td></td>").append();
+            //查看按钮
+            var selectButTd = $("<button></button>").addClass("btn btn-success btn-sm select_btn order_select_but").attr("aria-hidden", "true")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("查看").attr("data-info",item.orderId);
+
             //编辑按钮
             var editButTd = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn order_edit_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑").attr("data-info",item.orderId)
@@ -310,7 +321,7 @@
             var delButTd = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn order_del_but").attr("aria-hidden", "true")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除").attr("data-info",item.orderId);
 
-            userOperateElm.append(editButTd).append(" ").append(delButTd);
+            userOperateElm.append(selectButTd).append(" ").append(editButTd).append(" ").append(delButTd);
 
             $("<tr></tr>").append(checkBox).append(orderIdElm).append(orderPubUserNameElm).append(orderUserNameElm)
                 .append(orderCommodityNameElm).append(orderNameElm).append(orderCodeElm).append(orderStatusElm).append(userOperateElm)

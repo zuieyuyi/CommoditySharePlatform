@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -22,6 +23,15 @@ public class OrderController {
     @RequestMapping("to_orders")
     public String to_orders() {
         return "admin/order_list";
+    }
+
+    @RequestMapping(value = "to_order_select/{orderId}",method = RequestMethod.GET)
+    public ModelAndView toUserSelect(@PathVariable("orderId") Integer orderId){
+        Order order = orderService.selectOrderById(orderId);
+
+        ModelAndView mv = new ModelAndView("admin/order_select");
+        mv.addObject("order",order);
+        return mv;
     }
 
     /**

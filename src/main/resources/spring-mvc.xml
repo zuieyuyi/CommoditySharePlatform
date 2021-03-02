@@ -43,6 +43,7 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/logout"/>
             <bean class="com.commodityshareplatform.subject.interceptor.OnlineInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

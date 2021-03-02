@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/admin/index::header}"></div>
+<body>
+<div class="row">
+    <div class="col-md-10">
+        <h2>用户详情页面</h2>
+    </div>
+    <div class="col-md-2">
+        <a th:href="@{/admin/to_users}" class="btn btn-default" role="button">
+            <span style="color:gray">返回</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover" id="user_table">
+            <tr id="id">
+                <th>Id</th>
+                <th>[[${user == null?"":user.userId}]]</th>
+            </tr>
+            <tr id="userName">
+                <th>用户名</th>
+                <th>[[${user == null?"":user.userName}]]</th>
+            </tr>
+            <tr id="userPwd">
+                <th>用户密码</th>
+                <th>*******</th>
+            </tr>
+            <tr id="userAddr">
+                <th>用户地址</th>
+                <th>[[${user == null?"":user.userAddr}]]</th>
+            </tr>
+            <tr id="userCollect">
+                <th>用户收藏商品</th>
+                <th>[[${user == null?"":user.userCollect}]]</th>
+            </tr>
+            <tr id="userEmail">
+                <th>用户邮箱</th>
+                <th>[[${user == null?"":user.userEmail}]]</th>
+            </tr>
+            <tr id="userDetails">
+                <th>用户详情介绍</th>
+                <th>[[${user == null?"":user.userDetails}]]</th>
+            </tr>
+            <tr id="userStatus">
+                <th>用户状态</th>
+                <th>[[${user == null?"":user.userStatusMsg}]]</th>
+            </tr>
+            <tr id="userCreateDate">
+                <th>用户创建时间</th>
+                <th>[[${user == null?"":#dates.format(user.userCreateDate,"yyyy-MM-dd")}]]</th>
+            </tr>
+            <tr id="userMoney">
+                <th>金钱剩余总额</th>
+                <th>[[${user == null?"":user.userMoney}]]</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:replace="~{/admin/index::js}"></div>
+</body>
+</html>

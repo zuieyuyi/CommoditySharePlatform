@@ -111,7 +111,7 @@ public class UserService implements IUserService {
      */
     @Override
     public Integer insertUser(User user) {
-        user.setUserCearteDate(new Date());
+        user.setUserCreateDate(new Date());
         int result = userMapper.insertSelective(user);
         return result;
     }
