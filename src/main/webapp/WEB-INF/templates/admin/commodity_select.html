@@ -12,44 +12,77 @@
         </a>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="addTagModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table id="tagInfo" class="table table-hover">
+
+                </table>
+                <div class="row">
+                    <input type="button" class="btn btn-primary" id="addTagBut" value="新增一个标签" onclick="addTagElm()">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-hover" id="commodity_table">
+        <table class="table" id="commodity_table">
             <tr id="id">
                 <th>Id</th>
-                <th>[[${commodity == null?"":commodity.commodityId}]]</th>
+                <td>[[${commodity == null?"":commodity.commodityId}]]</td>
+                <td></td>
             </tr>
             <tr id="commodityName">
-                <th>商品名</th>
-                <th>[[${commodity == null?"":commodity.commodityName}]]</th>
+                <th>商品名:</th>
+                <td>[[${commodity == null?"":commodity.commodityName}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityStatus">
-                <th>商品状态</th>
-                <th>[[${commodity == null?"":commodity.commodityStatus}]]</th>
+                <th>商品状态:</th>
+                <td>[[${commodity == null?"":commodity.commodityStatus}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityNum">
-                <th>商品数量</th>
-                <th>[[${commodity == null?"":commodity.commodityNum}]]</th>
+                <th>商品数量:</th>
+                <td>[[${commodity == null?"":commodity.commodityNum}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityUser">
-                <th>发布用户</th>
-                <th>[[${commodity == null?"":commodity.commodityUserName}]]</th>
+                <th>发布用户:</th>
+                <td>[[${commodity == null?"":commodity.commodityUserName}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityTags">
-                <th>商品类型标签</th>
-                <th>[[${commodity == null?"":commodity.commodityTag}]]</th>
+                <th>商品类型标签:</th>
+                <td>[[${commodity == null?"":commodity.commodityTag}]]</td>
+                <td>
+                    <input type="button" class="btn btn-info" value="添加标签" onclick="cleanTagInfo()" data-toggle="modal" data-target="#addTagModal">
+                </td>
             </tr>
             <tr id="commodityQuality">
-                <th>商品质量</th>
-                <th>[[${commodity == null?"":commodity.commodityQuality}]]</th>
+                <th>商品质量:</th>
+                <td>[[${commodity == null?"":commodity.commodityQuality}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityDetails">
-                <th>商品介绍</th>
-                <th>[[${commodity == null?"":commodity.commodityDetails}]]</th>
+                <th>商品介绍:</th>
+                <td>[[${commodity == null?"":commodity.commodityDetails}]]</td>
+                <td> </td>
             </tr>
             <tr id="commodityCreateDate">
-                <th>创建日期</th>
-                <th>[[${commodity == null?"":commodity.commodityCreateDate}]]</th>
+                <th>创建日期:</th>
+                <td>[[${commodity == null?"":commodity.commodityCreateDate}]]</td>
+                <td> </td>
             </tr>
         </table>
     </div>
@@ -92,6 +125,29 @@
                 $("#commodityCreateDate").append(commodityCreateDateTh);
             }
         });
+    }
+
+    // function addTagElm() {
+    //     //1、获取#tagInfo中有多少个td元素
+    //     var tagTable = $("#tagInfo");
+    //     var tdTags = $("#tagInfo td");
+    //     var tagText = $("<input type='text' class='col-3 form-control'>");
+    //     if (tdTags.length%4 == 0){
+    //         var trTag = $("<tr></tr>");
+    //         var tdTag = $("<td></td>");
+    //
+    //         trTag.append(tdTag.append(tagText)).appendTo(tagTable);
+    //     }else{
+    //         var tdTag = $("<td></td>");
+    //         var row = parseInt(tdTags.length/4);
+    //         tdTag.append(tagText)
+    //         $("#tagInfo>tr:eq(" + row +")").append(tdTag);
+    //     }
+    // }
+
+    function cleanTagInfo(){
+        //1、清理#tagInfo中的内容
+        $("#tagInfo").empty();
     }
     /*]]>*/
 </script>

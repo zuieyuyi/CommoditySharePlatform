@@ -17,43 +17,43 @@
         <table class="table table-hover" id="user_table">
             <tr id="id">
                 <th>Id</th>
-                <th>[[${user == null?"":user.userId}]]</th>
+                <td>[[${user == null?"":user.userId}]]</td>
             </tr>
             <tr id="userName">
-                <th>用户名</th>
-                <th>[[${user == null?"":user.userName}]]</th>
+                <th>用户名:</th>
+                <td>[[${user == null?"":user.userName}]]</td>
             </tr>
             <tr id="userPwd">
-                <th>用户密码</th>
-                <th>*******</th>
+                <th>用户密码:</th>
+                <td>*******</td>
             </tr>
             <tr id="userAddr">
-                <th>用户地址</th>
-                <th>[[${user == null?"":user.userAddr}]]</th>
+                <th>用户地址:</th>
+                <td>[[${user == null?"":user.userAddr}]]</td>
             </tr>
             <tr id="userCollect">
-                <th>用户收藏商品</th>
-                <th>[[${user == null?"":user.userCollect}]]</th>
+                <th>用户收藏商品:</th>
+                <td>[[${user == null?"":user.userCollect}]]</td>
             </tr>
             <tr id="userEmail">
-                <th>用户邮箱</th>
-                <th>[[${user == null?"":user.userEmail}]]</th>
+                <th>用户邮箱:</th>
+                <td>[[${user == null?"":user.userEmail}]]</td>
             </tr>
             <tr id="userDetails">
-                <th>用户详情介绍</th>
-                <th>[[${user == null?"":user.userDetails}]]</th>
+                <th>用户详情介绍:</th>
+                <td>[[${user == null?"":user.userDetails}]]</td>
             </tr>
             <tr id="userStatus">
-                <th>用户状态</th>
-                <th>[[${user == null?"":user.userStatusMsg}]]</th>
+                <th>用户状态:</th>
+                <td>[[${user == null?"":user.userStatusMsg}]]</td>
             </tr>
             <tr id="userCreateDate">
-                <th>用户创建时间</th>
-                <th>[[${user == null?"":#dates.format(user.userCreateDate,"yyyy-MM-dd")}]]</th>
+                <th>用户创建时间:</th>
+                <td>[[${user == null?"":#dates.format(user.userCreateDate,"yyyy-MM-dd")}]]</td>
             </tr>
             <tr id="userMoney">
-                <th>金钱剩余总额</th>
-                <th>[[${user == null?"":user.userMoney}]]</th>
+                <th>金钱剩余总额:</th>
+                <td>[[${user == null?"":user.userMoney}]]</td>
             </tr>
         </table>
     </div>
