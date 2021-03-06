@@ -12,6 +12,28 @@
         </a>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="addTagModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table id="tagInfo" class="table table-hover">
+
+                </table>
+                <div class="row">
+                    <input type="button" class="btn btn-primary" id="addTagBut" value="新增一个标签" onclick="addTagElm()">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover" id="commodity_table">
@@ -61,6 +83,61 @@
     $(document).ready(function(){
         // getCommodityById()
     });
+
+    //通过id从数据库中读取对应的数据
+    function getCommodityById(commodityId) {
+        $.ajax({
+            url: PROJECT_PATH+"/admin/commodity/"+commodityId,
+            type: "GET",
+            success: function (result) {
+                var result = result.data.list;
+
+                //创建元素
+                var idTh = $("<th></th>").append(result.commodityId);
+                var commodityNameTh = $("<th></th>").append(result.commodityName);
+                var commodityStatusTh = $("<th></th>").append(result.commodityStatusMsg);
+                var commodityNumTh = $("<th></th>").append(result.commodityNum);
+                var commodityUserTh = $("<th></th>").append(result.commodityUserName);
+                var commodityTagsTh = $("<th></th>").append(result.commodityTag);
+                var commodityQualityTh = $("<th></th>").append(result.commodityQuality);
+                var commodityDetailsTh = $("<th></th>").append(result.commodityDetails);
+                var commodityCreateDateTh = $("<th></th>".append(result.commodityCreateDate));
+
+                $("#id").append(idTh);
+                $("#commodityName").append(commodityNameTh);
+                $("#commodityStatus").append(commodityStatusTh);
+                $("#commodityNum").append(commodityNumTh);
+                $("#commodityUser").append(commodityUserTh);
+                $("#commodityTags").append(commodityTagsTh);
+                $("#commodityQuality").append(commodityQualityTh);
+                $("#commodityDetails").append(commodityDetailsTh);
+                $("#commodityCreateDate").append(commodityCreateDateTh);
+            }
+        });
+    }
+
+    // function addTagElm() {
+    //     //1、获取#tagInfo中有多少个td元素
+    //     var tagTable = $("#tagInfo");
+    //     var tdTags = $("#tagInfo td");
+    //     var tagText = $("<input type='text' class='col-3 form-control'>");
+    //     if (tdTags.length%4 == 0){
+    //         var trTag = $("<tr></tr>");
+    //         var tdTag = $("<td></td>");
+    //
+    //         trTag.append(tdTag.append(tagText)).appendTo(tagTable);
+    //     }else{
+    //         var tdTag = $("<td></td>");
+    //         var row = parseInt(tdTags.length/4);
+    //         tdTag.append(tagText)
+    //         $("#tagInfo>tr:eq(" + row +")").append(tdTag);
+    //     }
+    // }
+
+    function cleanTagInfo(){
+        //1、清理#tagInfo中的内容
+        $("#tagInfo").empty();
+    }
     /*]]>*/
 </script>
 </html>

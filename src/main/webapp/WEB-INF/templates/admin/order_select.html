@@ -17,51 +17,51 @@
         <table class="table table-hover" id="order_table">
             <tr id="id">
                 <th>Id</th>
-                <th>[[${order == null?"":order.orderId}]]</th>
+                <td>[[${order == null?"":order.orderId}]]</td>
             </tr>
             <tr id="orderName">
-                <th>订单名</th>
-                <th>[[${order == null?"":order.orderName}]]</th>
+                <th>订单名:</th>
+                <td>[[${order == null?"":order.orderName}]]</td>
             </tr>
             <tr id="orderPubUserName">
-                <th>买家用户</th>
-                <th>[[${order == null?"":order.orderPubUserName}]]</th>
+                <th>买家用户:</th>
+                <td>[[${order == null?"":order.orderPubUserName}]]</td>
             </tr>
             <tr id="orderUserName">
-                <th>卖家用户</th>
-                <th>[[${order == null?"":order.orderUserName}]]</th>
+                <th>卖家用户:</th>
+                <td>[[${order == null?"":order.orderUserName}]]</td>
             </tr>
             <tr id="orderCommodityName">
-                <th>商品名</th>
-                <th>[[${order == null?"":order.orderCommodityName}]]</th>
+                <th>商品名:</th>
+                <td>[[${order == null?"":order.orderCommodityName}]]</td>
             </tr>
             <tr id="orderCode">
-                <th>订单编号</th>
-                <th>[[${order == null?"":order.orderCode}]]</th>
+                <th>订单编号:</th>
+                <td>[[${order == null?"":order.orderCode}]]</td>
             </tr>
             <tr id="orderStatusMsg">
-                <th>订单状态</th>
-                <th>[[${order == null?"":order.orderStatusMsg}]]</th>
+                <th>订单状态:</th>
+                <td>[[${order == null?"":order.orderStatusMsg}]]</td>
             </tr>
             <tr id="orderAddr">
-                <th>订单发送地址</th>
-                <th>[[${order == null?"":order.orderAddr}]]</th>
+                <th>订单发送地址:</th>
+                <td>[[${order == null?"":order.orderAddr}]]</td>
             </tr>
             <tr id="orderArriveAddr">
-                <th>订单送达地址</th>
-                <th>[[${order == null?"":order.orderArriveAddr}]]</th>
+                <th>订单送达地址:</th>
+                <td>[[${order == null?"":order.orderArriveAddr}]]</td>
             </tr>
             <tr id="orderBeginRentTime">
-                <th>租借开始时间</th>
-                <th>[[${order == null?"":#dates.format(order.orderBeginRentTime,"yyyy-MM-dd")}]]</th>
+                <th>租借开始时间:</th>
+                <td>[[${order == null?"":#dates.format(order.orderBeginRentTime,"yyyy-MM-dd")}]]</td>
             </tr>
             <tr id="orderEndRentTime">
-                <th>租借结束时间</th>
-                <th>[[${order == null?"":#dates.format(order.orderEndRentTime,"yyyy-MM-dd")}]]</th>
+                <th>租借结束时间:</th>
+                <td>[[${order == null?"":#dates.format(order.orderEndRentTime,"yyyy-MM-dd")}]]</td>
             </tr>
             <tr id="orderBackTime">
-                <th>租借结束时间</th>
-                <th>[[${order == null?"":#dates.format(order.orderBackTime,"yyyy-MM-dd")}]]</th>
+                <th>租借结束时间:</th>
+                <td>[[${order == null?"":#dates.format(order.orderBackTime,"yyyy-MM-dd")}]]</td>
             </tr>
         </table>
     </div>
