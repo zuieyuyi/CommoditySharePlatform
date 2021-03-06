@@ -61,38 +61,6 @@
     $(document).ready(function(){
         // getCommodityById()
     });
-
-    //通过id从数据库中读取对应的数据
-    function getCommodityById(commodityId) {
-        $.ajax({
-            url: PROJECT_PATH+"/admin/commodity/"+commodityId,
-            type: "GET",
-            success: function (result) {
-                var result = result.data.list;
-
-                //创建元素
-                var idTh = $("<th></th>").append(result.commodityId);
-                var commodityNameTh = $("<th></th>").append(result.commodityName);
-                var commodityStatusTh = $("<th></th>").append(result.commodityStatusMsg);
-                var commodityNumTh = $("<th></th>").append(result.commodityNum);
-                var commodityUserTh = $("<th></th>").append(result.commodityUserName);
-                var commodityTagsTh = $("<th></th>").append(result.commodityTag);
-                var commodityQualityTh = $("<th></th>").append(result.commodityQuality);
-                var commodityDetailsTh = $("<th></th>").append(result.commodityDetails);
-                var commodityCreateDateTh = $("<th></th>".append(result.commodityCreateDate));
-
-                $("#id").append(idTh);
-                $("#commodityName").append(commodityNameTh);
-                $("#commodityStatus").append(commodityStatusTh);
-                $("#commodityNum").append(commodityNumTh);
-                $("#commodityUser").append(commodityUserTh);
-                $("#commodityTags").append(commodityTagsTh);
-                $("#commodityQuality").append(commodityQualityTh);
-                $("#commodityDetails").append(commodityDetailsTh);
-                $("#commodityCreateDate").append(commodityCreateDateTh);
-            }
-        });
-    }
     /*]]>*/
 </script>
 </html>
