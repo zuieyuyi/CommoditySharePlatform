@@ -107,4 +107,28 @@ public class CommodityController {
             return ResultUtils.error(-1,"商品修改失败");
         }
     }
+
+    /**
+     * 保存商品标签
+     */
+    @RequestMapping(value = "/commodityTags/{commodityId}",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result saveCommodityTags(@PathVariable("commodityId") Integer commodityId,@RequestParam("commodityTags") String commodityTags){
+        Integer result = commodityService.saveCommodityTags(commodityId, commodityTags);
+        if (result != null){
+            return ResultUtils.success();
+        }else{
+            return ResultUtils.error(-1,"商品修改失败");
+        }
+    }
+
+    /**
+     * 获取商品标签
+     */
+    @RequestMapping(value = "/commodityTags/{commodityId}",method = RequestMethod.GET)
+    @ResponseBody
+    public Result<String> getCommodityTags(@PathVariable("commodityId") Integer commodityId){
+        String commodityTags = commodityService.getCommodityTags(commodityId);
+        return ResultUtils.success(commodityTags);
+    }
 }

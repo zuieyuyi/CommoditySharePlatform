@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -148,5 +150,23 @@ public class CommodityService implements ICommodityService {
             result += deleteCommodityById(id);
         }
         return result;
+    }
+
+    @Override
+    public Integer saveCommodityTags(Integer commodityId,String tags){
+        Commodity commodity = selectCommodityById(commodityId);
+        commodity.setCommodityTag(tags);
+
+        CommodityExample commodityExample = new CommodityExample();
+        CommodityExample.Criteria criteria = commodityExample.createCriteria();
+        criteria.andCommodityIdEqualTo(commodity.getCommodityId());
+        int result = commodityMapper.updateByExample(commodity, commodityExample);
+        return result;
+    }
+
+    public String getCommodityTags(Integer commodityId){
+        Commodity commodity = selectCommodityById(commodityId);
+        String commodityTags = commodity.getCommodityTag();
+        return commodityTags;
     }
 }

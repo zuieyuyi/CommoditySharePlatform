@@ -16,4 +16,8 @@ public interface ICommodityService {
     public Integer insertCommodity(Commodity commodity);
 
     public Integer deleteCommodityBatchById(List<Integer> ids);
+
+    public Integer saveCommodityTags(Integer commodityId,String tags);
+
+    public String getCommodityTags(Integer commodityId);
 }
