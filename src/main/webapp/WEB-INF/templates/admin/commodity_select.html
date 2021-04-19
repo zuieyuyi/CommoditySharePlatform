@@ -103,7 +103,6 @@
 
     //创建一个元素
     function addTagElm(tag) {
-        debugger;
         if(tag == null && tag == undefined){
             tag =  "";
         }
@@ -111,11 +110,37 @@
         var tagTable = $("#tagInfo");
         var tdTags = $("#tagInfo td");
         var tagText = $("<input type='text' class='form-control class-tag' value='"+ tag +"'>");
+
         if (tdTags.length <= 3){
             if (tdTags.length == 0){
+                var childTagNull = $("<option value=''></option>").append("");
+                var childTag1 = $("<option value='生活便利'></option>").append("生活便利");
+                var childTag2 = $("<option value='服装装扮'></option>").append("服装装扮");
+                var childTag3 = $("<option value='休闲娱乐'></option>").append("休闲娱乐");
+                var childTag4 = $("<option value='电子设备'></option>").append("电子设备");
+                var childTags = new Array();
+                childTags.push(childTag1);
+                childTags.push(childTag2);
+                childTags.push(childTag3);
+                childTags.push(childTag4);
+
                 var trTag = $("<tr></tr>");
                 var tdTag = $("<td></td>");
-                trTag.append(tdTag.append(tagText)).appendTo(tagTable);
+
+                $.each(childTags,function(index,childTag){
+                    if (childTag.val() == tag){
+                        childTag.attr("selected","selected");
+                        return;
+                    }
+                });
+
+                var fristTag = $("<select class='form-control class-tag'></select>").append(childTagNull)
+                    .append(childTag1)
+                    .append(childTag2)
+                    .append(childTag3)
+                    .append(childTag4);
+                trTag.append(tdTag.append(fristTag)).appendTo(tagTable);
+
             }else{
                 var tdTag = $("<td></td>");
                 $("#tagInfo>tr:eq(0)").append(tdTag.append(tagText));

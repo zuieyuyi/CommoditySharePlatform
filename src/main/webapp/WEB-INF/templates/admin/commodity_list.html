@@ -138,9 +138,6 @@
         <table id="commodities_table" class="table table-hover">
             <thead>
             <tr>
-                <th>
-                    <input type="checkbox" class="check_item"/>
-                </th>
                 <th>Id</th>
                 <th>商品名</th>
                 <th>商品状态</th>
@@ -217,7 +214,7 @@
     function toPage(pn) {
         $.ajax({
             url: PROJECT_PATH + "/admin/commodities",
-            data: "pn=" + pn,
+            data: {"pn=" + pn},
             type: "GET",
             success: function (result) {
                 // console.log(result);
@@ -336,7 +333,7 @@
         //中间页
         $.each(pageInfo.navigatepageNums, function (index, item) {
             var numPage = $("<li></li>").append($("<a></a>").append(item).addClass("page-link")).addClass("page-item");
-            ;
+
             if (pageInfo.pageNum == item) {
                 numPage.addClass("active");
             } else {
@@ -463,7 +460,7 @@
             success: function(result){
                 if (result.code == 10000){
                     //关闭模态框
-                    $("#updata_commodity_modal").modal("hide");
+                    $("#update_commodity_modal").modal("hide");
                     //清空表单
                     $("#commodityUpdate")[0].reset();
                     //弹窗提示成功
@@ -493,7 +490,7 @@
                     alert(result.msg);
                 }
             }
-        })
+        });
     }
 
     // function validateCommodity(){
