@@ -1,7 +1,9 @@
 package com.commodityshareplatform.subject.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Commodity {
@@ -16,12 +18,15 @@ public class Commodity {
 
     private Integer commodityUserId;
 
+    private BigDecimal commodityPrice;
+
     private String commodityImgSrc;
 
     private String commodityTag;
 
     private String commodityQuality;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date commodityCreateDate;
 
     private Integer isValid;
@@ -70,6 +75,14 @@ public class Commodity {
 
     public void setCommodityUserId(Integer commodityUserId) {
         this.commodityUserId = commodityUserId;
+    }
+
+    public BigDecimal getCommodityPrice() {
+        return commodityPrice;
+    }
+
+    public void setCommodityPrice(BigDecimal commodityPrice) {
+        this.commodityPrice = commodityPrice;
     }
 
     public String getCommodityImgSrc() {

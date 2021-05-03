@@ -44,11 +44,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             for (int i = 0; i < admins.size(); i++) {
                 Admin admin = admins.get(i);
                 String adminPassword = admin.getAdminPassword();
-                if (MD5Utils.stringToMD5(password).equals(adminPassword)) {
+                if (MD5Utils.stringToMD5(password).toString().equals(adminPassword)) {
                     logger.info(username + "用户登录成功");
                     //将用户名以及加密过的密码保存session中
                     request.getSession().setAttribute("username", username);
-                    request.getSession().setAttribute("password", MD5Utils.stringToMD5(password));
+                    request.getSession().setAttribute("password", MD5Utils.stringToMD5(password).toString());
                     request.getSession().removeAttribute("msg");
                     return true;
                 } else if (i == admins.size() - 1) {

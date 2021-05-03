@@ -38,6 +38,10 @@
 
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="commodityPrice">商品单价</label>
+                        <input type="number" class="form-control" name="commodityPrice" id="commodityPrice" placeholder="商品单价">
+                    </div>
                     <span style="color:red" class="valid-commodityUserId"></span>
                     <div class="form-group">
                         <label for="commodityQuality">商品质量</label>
@@ -49,6 +53,13 @@
 <!--                        <input type="file" id="exampleInputFile">-->
 <!--                        <p class="help-block">Example block-level help text here.</p>-->
 <!--                    </div>-->
+                    <div class="form-group">
+                        <label for="commodityImgSrc">图片上传</label>
+                        <!--                    <input type="file" id="exampleInputFile" >-->
+                        <input type="file" id="commodityImgSrc" >
+                        <!--                    <p class="help-block">Example block-level help text here.</p>-->
+                        <input type="button" id="imgBtn" value="上传" onclick="uploadImg('#commodityImgSrc','#commodityUserId')">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -99,15 +110,25 @@
                     </div>
                     <span style="color:red" class="valid-commodityUserId"></span>
                     <div class="form-group">
+                        <label for="editComPrice">商品单价</label>
+                        <input type="number" class="form-control" name="commodityPrice" id="editComPrice" placeholder="商品单价">
+                    </div>
+                    <span style="color:red" class="valid-commodityPrice"></span>
+                    <div class="form-group">
                         <label FOR="editComQuality">商品质量</label>
                         <input id="editComQuality" type="text" class="form-control" name="commodityQuality" placeholder="商品质量">
                     </div>
                     <span style="color:red" class="valid-commodityQuality"></span>
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="exampleInputFile">商品图片</label>-->
-                    <!--                        <input type="file" id="exampleInputFile">-->
-                    <!--                        <p class="help-block">Example block-level help text here.</p>-->
-                    <!--                    </div>-->
+                    <div id="showImg" class="form-group">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="editComImgSrc">图片上传</label>
+                        <!--                    <input type="file" id="exampleInputFile" >-->
+                        <input type="file" id="editComImgSrc" >
+                        <!--                    <p class="help-block">Example block-level help text here.</p>-->
+                        <input type="button" id="editImgBtn" value="上传" onclick="uploadImg('#editComImgSrc','#editComUserId')">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -138,6 +159,9 @@
         <table id="commodities_table" class="table table-hover">
             <thead>
             <tr>
+                <th>
+                    <input type="checkbox" class="check_item"/>
+                </th>
                 <th>Id</th>
                 <th>商品名</th>
                 <th>商品状态</th>
@@ -214,7 +238,7 @@
     function toPage(pn) {
         $.ajax({
             url: PROJECT_PATH + "/admin/commodities",
-            data: {"pn=" + pn},
+            data: {"pn":pn},
             type: "GET",
             success: function (result) {
                 // console.log(result);
@@ -384,6 +408,7 @@
         var commodityStatus = $("#commodityStatus").val();
         var commodityNum = $("#commodityNum").val();
         var commodityUserId = $("#commodityUserId").val();
+        var commodityPrice = $("#commodityPrice").val();
         var commodityQuality = $("#commodityQuality").val();
 
         $.ajax({
@@ -393,6 +418,7 @@
                 "commodityStatus":commodityStatus,
                 "commodityNum":commodityNum,
                 "commodityUserId":commodityUserId,
+                "commodityPrice":commodityPrice,
                 "commodityQuality":commodityQuality},
             type: "POST",
             success: function(result){
@@ -422,17 +448,19 @@
                 $("#editComId").val(commodityId);
                 $("#editComName").val(result.data.commodityName);
                 $("#editComNum").val(result.data.commodityNum);
+                $("#editComPrice").val(result.data.commodityPrice);
                 // $("#editComUserId").append(result.data.commodityName);
                 // var optionTag = $("#editComUserId")
 
                 $("#editComUserId").find("option[value="+result.data.commodityUserId+"]").attr("selected",'selected');
 
                 $("#editComQuality").val(result.data.commodityQuality);
+                $("#showImg").empty();
+                $("#showImg").append("<span>目前图片：</span><img style='width: 100px' src='" + PROJECT_PATH + result.data.commodityImgSrc + "'>")
                 // // $("#editComStatus").append(result.data.commodityStatus);
                 // var statusOptionTag = $("#editComStatus>option");
                 // console.log(statusOptionTag);
                 $("#editComStatus").find("option[value="+result.data.commodityStatus+"]").attr("selected",'selected');
-
             }
         });
     }
@@ -489,6 +517,43 @@
                 }else{
                     alert(result.msg);
                 }
+            }
+        });
+    }
+
+    //图片上传
+    function uploadImg(elmId,userIdElm) {
+        var commodityUserId = $(userIdElm).val();
+        //获取文件对象以及其他参数
+        var file = $(elmId)[0].files[0];
+        var type = file.name.substr(file.name.lastIndexOf("."),file.name.length);
+
+        if(type!=".jpg"&&type!=".gif"&&type!=".jpeg"&& type!=".png"){
+            alert("您上传图片的类型不符合(.jpg|.jpeg|.gif|.png)！");
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("file",file);
+        formData.append("userId",commodityUserId);
+
+        $.ajax({
+            url : PROJECT_PATH + '/admin/imgUpload',
+            type : 'post',
+            dataType : 'json',
+            data : formData,
+            cache: false,   //上传文件无需缓存
+            processData: false,   // 用于对参数进行序列化处理，这里必须设为false
+            contentType:false, // 必须
+            success : function(result) {
+                if (result.code == 10000){
+                    alert("上传成功");
+                }else{
+                    alert(result.msg);
+                }
+            },
+            error:function () {
+                alert("请确认添加商品的用户再上传图片");
             }
         });
     }

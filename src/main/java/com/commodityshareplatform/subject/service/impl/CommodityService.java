@@ -119,18 +119,11 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Integer updateCommodity(Commodity commodity) {
-        //需要先查出商品信息
-        Commodity commodity1 = selectCommodityById(commodity.getCommodityId());
-        commodity1.setCommodityName(commodity.getCommodityName());
-        commodity1.setCommodityStatus(commodity.getCommodityStatus());
-        commodity1.setCommodityNum(commodity.getCommodityNum());
-        commodity1.setCommodityUserId(commodity.getCommodityUserId());
-        commodity1.setCommodityQuality(commodity.getCommodityQuality());
-
         CommodityExample commodityExample = new CommodityExample();
         CommodityExample.Criteria criteria = commodityExample.createCriteria();
         criteria.andCommodityIdEqualTo(commodity.getCommodityId());
-        int result = commodityMapper.updateByExample(commodity1, commodityExample);
+
+        int result = commodityMapper.updateByExampleSelective(commodity,commodityExample);
         return result;
     }
 

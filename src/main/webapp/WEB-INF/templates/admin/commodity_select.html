@@ -59,6 +59,11 @@
                 <td>[[${commodity == null?"":commodity.commodityNum}]]</td>
                 <td> </td>
             </tr>
+            <tr id="commodityPrice">
+                <th>商品每日单价:</th>
+                <td>[[${commodity == null?"":commodity.commodityPrice.toString()}]]</td>
+                <td> </td>
+            </tr>
             <tr id="commodityUser">
                 <th>发布用户:</th>
                 <td>[[${commodity == null?"":commodity.commodityUserName}]]</td>
@@ -84,6 +89,11 @@
             <tr id="commodityCreateDate">
                 <th>创建日期:</th>
                 <td>[[${commodity == null?"":commodity.commodityCreateDate}]]</td>
+                <td> </td>
+            </tr>
+            <tr id="commodityImgSrc">
+                <th>商品图片:</th>
+                <td><img style="width: 100%" th:src="${commodity == null?'':#httpServletRequest.getContextPath()+commodity.commodityImgSrc}"></td>
                 <td> </td>
             </tr>
         </table>
