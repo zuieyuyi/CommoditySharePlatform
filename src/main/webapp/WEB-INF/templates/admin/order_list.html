@@ -6,8 +6,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="add_order_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="order
-            Add">
+            <form id="orderAdd">
                 <div class="modal-header">
                     <h4 class="modal-title">添加订单</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -27,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="orderUserId">卖家</label>
-                        <select class="form-control" id="orderUserId" name="orderUserId">
+                        <select class="form-control" id="orderUserId" onchange="getCommodity('#orderCommodityId','#orderUserId')" name="orderUserId">
                         </select>
                     </div>
                     <div class="form-group">
@@ -37,7 +36,14 @@
                         <select class="form-control" id="orderCommodityId" name="orderCommodityId">
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="orderCommodityNum">商品租借数量</label>
+                        <input type="number" class="form-control" id="orderCommodityNum" name="orderCommodityNum">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderCommodityTotal">商品租借总价</label>
+                        <input type="number" class="form-control" id="orderCommodityTotal" name="orderCommodityTotal">
+                    </div>
                     <div class="form-group">
                         <label for="orderStatus">订单状态</label>
                         <select class="form-control" id="orderStatus" name="orderStatus">
@@ -46,6 +52,12 @@
                             <option value="3">出租中</option>
                             <option value="4">返还确认</option>
                             <option value="5">订单完成</option>
+                            <option value="6">未确认出租</option>
+                            <option value="7">未返还</option>
+                            <option value="8">确认收货</option>
+                            <option value="9">未确认收货</option>
+                            <option value="10">已退货</option>
+                            <option value="11">退货中</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -71,6 +83,11 @@
                     <div class="form-group">
                         <label for="orderBackTime">返还时间</label>
                         <input type="date" class="form-control" id="orderBackTime" name="orderBackTime"
+                               placeholder="1998-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderReturnTime">退货时间</label>
+                        <input type="date" class="form-control" id="orderReturnTime" name="orderReturnTime"
                                placeholder="1998-01-01">
                     </div>
 <!--                    <div class="form-group">-->
@@ -113,7 +130,7 @@
                     </div>
                     <div class="form-group">
                         <label for="editOrderUserId">卖家</label>
-                        <select class="form-control" id="editOrderUserId" name="orderUserId">
+                        <select class="form-control" id="editOrderUserId" onchange="getCommodity('#editOrderCommodityId','#editOrderUserId')" name="orderUserId">
                         </select>
                     </div>
                     <div class="form-group">
@@ -123,7 +140,14 @@
                         <select class="form-control" id="editOrderCommodityId" name="orderCommodityId">
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="editOrderCommodityNum">商品租借数量</label>
+                        <input type="number" class="form-control" id="editOrderCommodityNum" name="orderCommodityNum">
+                    </div>
+                    <div class="form-group">
+                        <label for="editOrderCommodityTotal">商品租借总价</label>
+                        <input type="number" class="form-control" id="editOrderCommodityTotal" name="orderCommodityTotal">
+                    </div>
                     <div class="form-group">
                         <label for="editOrderStatus">订单状态</label>
                         <select class="form-control" id="editOrderStatus" name="orderStatus">
@@ -132,6 +156,12 @@
                             <option value="3">出租中</option>
                             <option value="4">返还确认</option>
                             <option value="5">订单完成</option>
+                            <option value="6">未确认出租</option>
+                            <option value="7">未返还</option>
+                            <option value="8">确认收货</option>
+                            <option value="9">未确认收货</option>
+                            <option value="10">已退货</option>
+                            <option value="11">退货中</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -159,11 +189,11 @@
                         <input type="date" class="form-control" id="editOrderBackTime" name="orderBackTime"
                                placeholder="1998-01-01">
                     </div>
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="exampleInputFile">商品图片</label>-->
-                    <!--                        <input type="file" id="exampleInputFile">-->
-                    <!--                        <p class="help-block">Example block-level help text here.</p>-->
-                    <!--                    </div>-->
+                    <div class="form-group">
+                        <label for="editOrderReturnTime">退货时间</label>
+                        <input type="date" class="form-control" id="editOrderReturnTime" name="orderReturnTime"
+                               placeholder="1998-01-01">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -247,8 +277,8 @@
         getAllUser("#orderPubUserId","#orderUserId");
         getAllUser("#editOrderPubUserId","#editOrderUserId");
         //商品初始化
-        getAllCommodity("#orderCommodityId");
-        getAllCommodity("#editOrderCommodityId");
+        // getAllCommodity("#orderCommodityId");
+        // getAllCommodity("#editOrderCommodityId");
     });
 
     //查看按钮事件
@@ -260,6 +290,7 @@
     //给编辑按钮添加事件
     $(document).on("click",".order_edit_but",function (){
         //1、查出用户信息
+        getCommodity('#editOrderCommodityId','#editOrderUserId');
         getOrderById($(this).attr("data-info"));
     });
 
@@ -439,9 +470,11 @@
     }
 
     //获取所有商品的信息
-    function getAllCommodity(selectId){
+    function getCommodity(selectId,pubUserElm){
+        var pubUserId = $(pubUserElm).val();
         $.ajax({
-            url: PROJECT_PATH+"/admin/commodities",
+            url: PROJECT_PATH+"/admin/commoditiess",
+            data:{"pubUserId":pubUserId},
             type: "GET",
             success: function(result) {
                 buildCommoditySelect(result,selectId);
@@ -456,7 +489,7 @@
 
         $("<option></option>").appendTo(selectTag);
 
-        var commodities = result.data.list;
+        var commodities = result.data;
         //生成下拉框元素
         $.each(commodities,function(index,commodity){
             var optionTag = $("<option value='"+ commodity.commodityId +"'>"+ commodity.commodityName +"</option>")
@@ -470,12 +503,15 @@
         var orderPubUserId = $("#orderPubUserId").val();
         var orderUserId = $("#orderUserId").val();
         var orderCommodityId = $("#orderCommodityId").val();
+        var orderCommodityNum = $("#orderCommodityNum").val();
+        var orderCommodityTotal = $("#orderCommodityTotal").val();
         var orderStatus = $("#orderStatus").val();
         var orderAddr = $("#orderAddr").val();
         var orderArriveAddr = $("#orderArriveAddr").val();
         var orderBeginRentTime = dateReplace($("#orderBeginRentTime").val());
         var orderEndRentTime = dateReplace($("#orderEndRentTime").val());
         var orderBackTime = dateReplace($("#orderBackTime").val());
+        var orderReturnTime = dateReplace($("#orderReturnTime").val());
 
         $.ajax({
             url: PROJECT_PATH+"/admin/order",
@@ -484,12 +520,15 @@
                 "orderPubUserId":orderPubUserId,
                 "orderUserId":orderUserId,
                 "orderCommodityId":orderCommodityId,
+                "orderCommodityNum":orderCommodityNum,
+                "orderCommodityTotal":orderCommodityTotal,
                 "orderStatus":orderStatus,
                 "orderAddr":orderAddr,
                 "orderArriveAddr":orderArriveAddr,
                 "orderBeginRentTime":orderBeginRentTime,
                 "orderEndRentTime":orderEndRentTime,
-                "orderBackTime":orderBackTime},
+                "orderBackTime":orderBackTime,
+                "orderReturnTime":orderReturnTime},
             type: "POST",
             success: function(result){
                 if (result.code == 10000){
@@ -525,12 +564,15 @@
                 $("#editOrderPubUserId").find("option[value="+result.data.orderPubUserId+"]").attr("selected",'selected');;
                 $("#editOrderUserId").find("option[value="+result.data.orderUserId+"]").attr("selected",'selected');
                 $("#editOrderCommodityId").find("option[value="+result.data.orderCommodityId+"]").attr("selected",'selected');
+                $("#editOrderCommodityNum").val(result.data.orderCommodityNum);
+                $("#editOrderCommodityTotal").val(result.data.orderCommodityTotal);
                 $("#editOrderStatus").find("option[value="+result.data.orderStatus+"]").attr("selected",'selected');
                 $("#editOrderAddr").val(result.data.orderAddr);
                 $("#editOrderArriveAddr").val(result.data.orderArriveAddr);
                 $("#editOrderBeginRentTime").val(result.data.orderBeginRentTime);
                 $("#editOrderEndRentTime").val(result.data.orderEndRentTime);
                 $("#editOrderBackTime").val(result.data.orderBackTime);
+                $("#editOrderReturnTime").val(result.data.orderReturnTime);
             }
         });
     }
@@ -538,16 +580,19 @@
     //保存订单请求
     function updateOrder(){
         var orderId = $("#editOrderId").val()
-        var orderName = $("#orderName").val();
-        var orderPubUserId = $("#orderPubUserId").val();
-        var orderUserId = $("#orderUserId").val();
-        var orderCommodityId = $("#orderCommodityId").val();
-        var orderStatus = $("#orderStatus").val();
-        var orderAddr = $("#orderAddr").val();
-        var orderArriveAddr = $("#orderArriveAddr").val();
-        var orderBeginRentTime = dateReplace($("#orderBeginRentTime").val());
-        var orderEndRentTime = dateReplace($("#orderEndRentTime").val());
-        var orderBackTime = dateReplace($("#orderBackTime").val());
+        var orderName = $("#editOrderName").val();
+        var orderPubUserId = $("#editOrderPubUserId").val();
+        var orderUserId = $("#editOrderUserId").val();
+        var orderCommodityId = $("#editOrderCommodityId").val();
+        var orderCommodityNum = $("#editOrderCommodityNum").val();
+        var orderCommodityTotal = $("#editOrderCommodityTotal").val();
+        var orderStatus = $("#editOrderStatus").val();
+        var orderAddr = $("#editOrderAddr").val();
+        var orderArriveAddr = $("#editOrderArriveAddr").val();
+        var orderBeginRentTime = dateReplace($("#editOrderBeginRentTime").val());
+        var orderEndRentTime = dateReplace($("#editOrderEndRentTime").val());
+        var orderBackTime = dateReplace($("#editOrderBackTime").val());
+        var orderReturnTime = dateReplace($("#editOrderReturnTime").val());
 
         $.ajax({
             url: PROJECT_PATH+"/admin/order",
@@ -558,12 +603,15 @@
                 "orderPubUserId":orderPubUserId,
                 "orderUserId":orderUserId,
                 "orderCommodityId":orderCommodityId,
+                "orderCommodityNum":orderCommodityNum,
+                "orderCommodityTotal":orderCommodityTotal,
                 "orderStatus":orderStatus,
                 "orderAddr":orderAddr,
                 "orderArriveAddr":orderArriveAddr,
                 "orderBeginRentTime":orderBeginRentTime,
                 "orderEndRentTime":orderEndRentTime,
-                "orderBackTime":orderBackTime},
+                "orderBackTime":orderBackTime,
+                "orderReturnTime":orderReturnTime},
             type: "POST",
             success: function(result){
                 if (result.code == 10000){

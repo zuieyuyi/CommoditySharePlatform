@@ -5,7 +5,9 @@ import com.commodityshareplatform.subject.dao.CommodityMapper;
 import com.commodityshareplatform.subject.dao.OrderMapper;
 import com.commodityshareplatform.subject.dao.UserMapper;
 import com.commodityshareplatform.subject.enuminfo.OrderStatusEnum;
+import com.commodityshareplatform.subject.service.ICommodityService;
 import com.commodityshareplatform.subject.service.IOrderService;
+import com.commodityshareplatform.subject.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -25,13 +27,28 @@ public class OrderService implements IOrderService {
     @Autowired
     CommodityMapper commodityMapper;
 
+    @Autowired
+    IUserService userService;
+    @Autowired
+    ICommodityService commodityService;
+
     @Override
-    public List<Order> selectAllOrders() {
-        List<Order> orders = orderMapper.selectAllOrder();
+    public List<Order> selectAllOrders(OrderExample example) {
+        CommodityExample commodityExample = new CommodityExample();
+        List<Order> orders = orderMapper.selectByExample(example);
         List<User> users = userMapper.selectAllUsers();
-        List<Commodity> commodities = commodityMapper.selectAllCommodities();
+        List<Commodity> commodities = commodityMapper.selectCommodities(commodityExample);
 
         for (Order order:orders){
+            //订单状态为3，则时间到了要变为7
+            if (order.getOrderStatus() == 3){
+                Date now = new Date();
+                if (now.getTime() > order.getOrderEndRentTime().getTime()){
+                    order.setOrderStatus(7);
+                    updateOrder(order);
+                }
+            }
+
             //确定订单状态信息
             if (order.getOrderStatus() == OrderStatusEnum.PAYMENT.getStatusCode()){
                 order.setOrderStatusMsg(OrderStatusEnum.PAYMENT.getStatus());
@@ -43,6 +60,18 @@ public class OrderService implements IOrderService {
                 order.setOrderStatusMsg(OrderStatusEnum.RETURN.getStatus());
             }else if (order.getOrderStatus() == OrderStatusEnum.RETURN_OVER.getStatusCode()){
                 order.setOrderStatusMsg(OrderStatusEnum.RETURN_OVER.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.NO_TAKE_DELIVERY.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.NO_TAKE_DELIVERY.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.NO_RETURN.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.NO_RETURN.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.TAKE_RECEIPT.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.TAKE_RECEIPT.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.NO_TAKE_RECEIPT.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.NO_TAKE_RECEIPT.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.RETURN_BACK.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.RETURN_BACK.getStatus());
+            }else if (order.getOrderStatus() == OrderStatusEnum.RETURNING.getStatusCode()){
+                order.setOrderStatusMsg(OrderStatusEnum.RETURNING.getStatus());
             }
 
             for (User user:users){
@@ -54,9 +83,9 @@ public class OrderService implements IOrderService {
                 if (user.getUserId()==order.getOrderPubUserId()){
                     order.setOrderPubUserName(user.getUserName());
                 }
-                if ((!"".equals(order.getOrderUserName()))&&(!"".equals(order.getOrderPubUserName()))){
-                    break;
-                }
+//                if ((!"".equals(order.getOrderUserName()))&&(!"".equals(order.getOrderPubUserName()))){
+//                    break;
+//                }
             }
 
             for (Commodity commodity:commodities){
@@ -77,7 +106,22 @@ public class OrderService implements IOrderService {
         OrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andOrderIdEqualTo(id);
         List<Order> orders = orderMapper.selectByExample(orderExample);
-        return orders.get(0);
+        Order order = orders.get(0);
+
+        User user = userService.selectUserById(order.getOrderUserId());
+        User pubUser = userService.selectUserById(order.getOrderPubUserId());
+        Commodity commodity = commodityService.selectCommodityById(order.getOrderCommodityId());
+
+        if (user != null){
+            order.setOrderUserName(user.getUserName());
+        }
+        if (pubUser != null){
+            order.setOrderPubUserName(pubUser.getUserName());
+        }
+        if (commodity != null){
+            order.setOrderCommodityName(commodity.getCommodityName());
+        }
+        return order;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,
@@ -103,19 +147,7 @@ public class OrderService implements IOrderService {
         OrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andOrderIdEqualTo(order.getOrderId());
 
-        Order order1 = selectOrderById(order.getOrderId());
-        order1.setOrderName(order.getOrderName());
-        order.setOrderPubUserId(order.getOrderPubUserId());
-        order.setOrderUserId(order.getOrderUserId());
-        order.setOrderCommodityId(order.getOrderCommodityId());
-        order.setOrderStatus(order.getOrderStatus());
-        order.setOrderAddr(order.getOrderAddr());
-        order.setOrderArriveAddr(order.getOrderArriveAddr());
-        order.setOrderBeginRentTime(order.getOrderBeginRentTime());
-        order.setOrderEndRentTime(order.getOrderEndRentTime());
-        order.setOrderBackTime(order.getOrderBackTime());
-
-        int result = orderMapper.updateByExample(order1, orderExample);
+        int result = orderMapper.updateByExampleSelective(order, orderExample);
         return result;
     }
 

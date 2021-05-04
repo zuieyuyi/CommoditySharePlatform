@@ -1,6 +1,7 @@
 package com.commodityshareplatform.subject.controller;
 
 import com.commodityshareplatform.subject.bean.Order;
+import com.commodityshareplatform.subject.bean.OrderExample;
 import com.commodityshareplatform.subject.bean.User;
 import com.commodityshareplatform.subject.service.IOrderService;
 import com.commodityshareplatform.subject.utils.Result;
@@ -40,7 +41,10 @@ public class OrderController {
     @RequestMapping(value = "orders", method = RequestMethod.GET)
     @ResponseBody
     public Result getAllOrders() {
-        List<Order> orders = orderService.selectAllOrders();
+        OrderExample example = new OrderExample();
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andIsValidEqualTo(1);
+        List<Order> orders = orderService.selectAllOrders(example);
         return ResultUtils.success(orders);
     }
 
@@ -51,7 +55,10 @@ public class OrderController {
     @ResponseBody
     public Result<PageInfo> getAllOrderss(@RequestParam("pn") Integer pn) {
         PageHelper.startPage(pn, 5);
-        List<Order> orders = orderService.selectAllOrders();
+        OrderExample example = new OrderExample();
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andIsValidEqualTo(1);
+        List<Order> orders = orderService.selectAllOrders(example);
         PageInfo pageInfo = new PageInfo(orders, 5);
         return ResultUtils.success(pageInfo);
     }

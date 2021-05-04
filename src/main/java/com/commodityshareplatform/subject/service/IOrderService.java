@@ -1,11 +1,12 @@
 package com.commodityshareplatform.subject.service;
 
 import com.commodityshareplatform.subject.bean.Order;
+import com.commodityshareplatform.subject.bean.OrderExample;
 
 import java.util.List;
 
 public interface IOrderService {
-    public List<Order> selectAllOrders();
+    public List<Order> selectAllOrders(OrderExample example);
 
     public Order selectOrderById(Integer id);
 

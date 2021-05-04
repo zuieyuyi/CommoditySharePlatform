@@ -30,6 +30,43 @@ public class CommodityService implements ICommodityService {
     UserMapper userMapper;
 
     @Override
+    public List<Commodity> selectCommodities(CommodityExample example) {
+
+        List<Commodity> commodities = commodityMapper.selectCommodities(example);
+
+        List<User> users = userMapper.selectByExample(null);
+
+        for (Commodity commodity:commodities){
+            //判断商品的状态
+            if (commodity.getCommodityStatus() == CommodityStatusEnum.NOR_SELL.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.NOR_SELL.getStatus());
+            else if (commodity.getCommodityStatus() == CommodityStatusEnum.SELL.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL.getStatus());
+            else if (commodity.getCommodityStatus() == CommodityStatusEnum.SELL_OUT.getStatusCode())
+                commodity.setCommodityStatusMsg(CommodityStatusEnum.SELL_OUT.getStatus());
+
+            if (commodity.getCommodityUserId() == null){
+                commodity.setCommodityUserName("无用户");
+                continue;
+            }
+            //获取用户名
+            for (User user:users) {
+                if (commodity.getCommodityUserId().equals(user.getUserId())) {
+                    //判断用户是否有效
+                    if (user.getIsValid() == 1){
+                        commodity.setCommodityUserName(user.getUserName());
+                    }else if (user.getIsValid() == 0){
+                        commodity.setCommodityUserName("用户已失效");
+                    }else {
+                        commodity.setCommodityUserName("无用户");
+                    }
+                }
+            }
+        }
+        return commodities;
+    }
+
+    @Override
     public List<Commodity> selectAllCommodities() {
 //        CommodityExample commodityExample = new CommodityExample();
 //        CommodityExample.Criteria criteria = commodityExample.createCriteria();

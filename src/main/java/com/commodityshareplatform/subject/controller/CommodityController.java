@@ -1,6 +1,8 @@
 package com.commodityshareplatform.subject.controller;
 
 import com.commodityshareplatform.subject.bean.Commodity;
+import com.commodityshareplatform.subject.bean.CommodityExample;
+import com.commodityshareplatform.subject.bean.OrderExample;
 import com.commodityshareplatform.subject.service.ICommodityService;
 import com.commodityshareplatform.subject.service.impl.CommodityService;
 import com.commodityshareplatform.subject.utils.Result;
@@ -41,10 +43,30 @@ public class CommodityController {
     @RequestMapping(value = "to_commodity_select/{commodityId}",method = RequestMethod.GET)
     public ModelAndView toCommoditySelect(@PathVariable("commodityId") Integer commodityId){
         Commodity commodity = commodityService.selectCommodityById(commodityId);
-
         ModelAndView mv = new ModelAndView("admin/commodity_select");
         mv.addObject("commodity",commodity);
         return mv;
+    }
+
+    /**
+     * 根据条件获取商品
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "commoditiess",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getAllCommodities(HttpServletRequest request){
+        String pubUserId = request.getParameter("pubUserId") == null?"":request.getParameter("pubUserId");
+
+        //过滤条件
+        CommodityExample example = new CommodityExample();
+        CommodityExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(pubUserId)){
+            criteria.andCommodityUserIdEqualTo(Integer.parseInt(pubUserId));
+        }
+
+        List<Commodity> commodities = commodityService.selectCommodities(example);
+        return ResultUtils.success(commodities);
     }
 
     /**

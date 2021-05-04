@@ -3,6 +3,7 @@ package com.commodityshareplatform.subject.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order extends OrderKey {
@@ -13,6 +14,10 @@ public class Order extends OrderKey {
     private Integer orderUserId;
 
     private Integer orderCommodityId;
+
+    private Integer orderCommodityNum;
+
+    private BigDecimal orderCommodityTotal;
 
     private String orderName;
 
@@ -34,6 +39,9 @@ public class Order extends OrderKey {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderBackTime;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderReturnTime;
 
     private Integer isValid;
 
@@ -81,6 +89,22 @@ public class Order extends OrderKey {
     @Override
     public void setOrderCommodityId(Integer orderCommodityId) {
         this.orderCommodityId = orderCommodityId;
+    }
+
+    public Integer getOrderCommodityNum() {
+        return orderCommodityNum;
+    }
+
+    public void setOrderCommodityNum(Integer orderCommodityNum) {
+        this.orderCommodityNum = orderCommodityNum;
+    }
+
+    public BigDecimal getOrderCommodityTotal() {
+        return orderCommodityTotal;
+    }
+
+    public void setOrderCommodityTotal(BigDecimal orderCommodityTotal) {
+        this.orderCommodityTotal = orderCommodityTotal;
     }
 
     public String getOrderName() {
@@ -153,6 +177,14 @@ public class Order extends OrderKey {
 
     public void setOrderBackTime(Date orderBackTime) {
         this.orderBackTime = orderBackTime;
+    }
+
+    public Date getOrderReturnTime() {
+        return orderReturnTime;
+    }
+
+    public void setOrderReturnTime(Date orderReturnTime) {
+        this.orderReturnTime = orderReturnTime;
     }
 
     public Integer getIsValid() {

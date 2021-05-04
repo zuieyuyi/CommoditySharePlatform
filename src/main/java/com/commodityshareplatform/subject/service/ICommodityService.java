@@ -1,10 +1,13 @@
 package com.commodityshareplatform.subject.service;
 
 import com.commodityshareplatform.subject.bean.Commodity;
+import com.commodityshareplatform.subject.bean.CommodityExample;
 
 import java.util.List;
 
 public interface ICommodityService {
+    public List<Commodity> selectCommodities(CommodityExample example);
+
     public List<Commodity> selectAllCommodities();
 
     public Commodity selectCommodityById(Integer id);
