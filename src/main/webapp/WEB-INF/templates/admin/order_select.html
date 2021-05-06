@@ -35,6 +35,14 @@
                 <th>商品名:</th>
                 <td>[[${order == null?"":order.orderCommodityName}]]</td>
             </tr>
+            <tr id="orderCommodityNum">
+                <th>商品名:</th>
+                <td>[[${order == null?"":order.orderCommodityNum}]]</td>
+            </tr>
+            <tr id="orderCommodityTotal">
+                <th>商品名:</th>
+                <td>[[${order == null?"":order.orderCommodityTotal}]]</td>
+            </tr>
             <tr id="orderCode">
                 <th>订单编号:</th>
                 <td>[[${order == null?"":order.orderCode}]]</td>
@@ -60,8 +68,12 @@
                 <td>[[${order == null?"":#dates.format(order.orderEndRentTime,"yyyy-MM-dd")}]]</td>
             </tr>
             <tr id="orderBackTime">
-                <th>租借结束时间:</th>
+                <th>退货时间:</th>
                 <td>[[${order == null?"":#dates.format(order.orderBackTime,"yyyy-MM-dd")}]]</td>
+            </tr>
+            <tr id="orderReturnTime">
+                <th>退货时间:</th>
+                <td>[[${order == null?"":#dates.format(order.orderReturnTime,"yyyy-MM-dd")}]]</td>
             </tr>
         </table>
     </div>

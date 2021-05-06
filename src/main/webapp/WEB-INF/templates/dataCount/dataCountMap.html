@@ -4,10 +4,13 @@
 <body>
 <div class="row">
     <div class="col-md-6">
-        <label target="myCountMap" >商品数据统计图</label>
+        <label target="myCountMap" >商品每月发布数量</label>
     </div>
     <div class="col-md-12">
         <canvas id="myCountMap" width="477" height="320" class="chartjs-render-monitor" style="display: block; width: 477px; height: 320px;"></canvas>
+    </div>
+    <div id="year" class="col-md-12">
+
     </div>
 </div>
 
@@ -15,95 +18,140 @@
 </body>
 <script th:inline="javascript">
     /*<![CDATA[*/
+    //项目地址
+    var PROJECT_PATH = [[${#httpServletRequest.getContextPath()}]];
+
     // 插件
-    var ctx = document.getElementById("myCountMap");
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],//底边数据
-            datasets: [{
-                label: "商品数量",//获取焦点标签显示内容
-                lineTension: 0.3,//曲线
-                backgroundColor: "rgba(78, 115, 223, 0.05)",//背景色
-                borderColor: "rgba(78, 115, 223, 1)",//边框色
-                pointRadius: 3,//点的大小
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",//点内的颜色
-                pointBorderColor: "rgba(78, 115, 223, 1)",//点外圈颜色
-                pointHoverRadius: 6,//点获取焦点时大小
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",//点获取焦点时内圈颜色
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",//点获取焦点时外圈颜色
-                pointHitRadius: 10,//点击点时大小
-                pointBorderWidth: 2,//点外圈宽
-                data: [0, 10, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40],//侧边栏数据（只需在这里变动）
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 25,
-                    top: 25,
-                    bottom: 0
+
+    $(document).ready(function(){
+        buildBtn("#year");
+        var date = new Date();
+        countCommodityEveryMonth(date.getFullYear());
+    });
+
+    //删除商品按钮事件
+    $(document).on("click",".year",function () {
+        countCommodityEveryMonth($(this).val());
+    });
+
+    function buildBtn(elm){
+        var father = $(elm);
+        var date = new Date();
+        var fullYear = date.getFullYear();
+        var years = [parseInt(fullYear)-2,parseInt(fullYear)-1,parseInt(fullYear),parseInt(fullYear)+1,parseInt(fullYear)+2];
+        $.each(years,function(index,y){
+            $("<input type='button' class='btn year' value='" + y + "'>").appendTo(father);
+        });
+    }
+
+    //统计请求
+    function countCommodityEveryMonth(year){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/countCommodityEveryMonth",
+            dataType: "json",
+            data: {"year":year},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    plugIn(result.data);
+                }else{
+                    alert(result.msg);
                 }
-            },
-            scales: {
-                xAxes: [{//x轴配置
-                    time: {
-                        unit: 'date'
-                    },
-                    gridLines: {//网格线
-                        display: false,
-                        drawBorder: false
-                    },
-                    ticks: {
-                        maxTicksLimit: 7
-                    }
+            }
+        })
+    }
+
+    function plugIn(data){
+        var ctx = document.getElementById("myCountMap");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],//底边数据
+                datasets: [{
+                    label: "商品数量",//获取焦点标签显示内容
+                    lineTension: 0.3,//曲线
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",//背景色
+                    borderColor: "rgba(78, 115, 223, 1)",//边框色
+                    pointRadius: 3,//点的大小
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",//点内的颜色
+                    pointBorderColor: "rgba(78, 115, 223, 1)",//点外圈颜色
+                    pointHoverRadius: 6,//点获取焦点时大小
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",//点获取焦点时内圈颜色
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",//点获取焦点时外圈颜色
+                    pointHitRadius: 10,//点击点时大小
+                    pointBorderWidth: 2,//点外圈宽
+                    data: data,//侧边栏数据（只需在这里变动）
                 }],
-                yAxes: [{//y轴配置
-                    ticks: {
-                        maxTicksLimit: 5,
-                        padding: 10,
-                        // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                            return number_format(value);//侧边栏输出的值
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{//x轴配置
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {//网格线
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
                         }
-                    },
-                    gridLines: {
-                        color: "rgb(234, 236, 244)",
-                        zeroLineColor: "rgb(234, 236, 244)",
-                        drawBorder: false,
-                        borderDash: [2],
-                        zeroLineBorderDash: [2]
-                    }
-                }],
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                intersect: false,
-                mode: 'index',
-                caretPadding: 10,
-                callbacks: {
-                    label: function(tooltipItem, chart) {
-                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                    }],
+                    yAxes: [{//y轴配置
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value);//侧边栏输出的值
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
+
     /*]]>*/
 </script>
 </html>

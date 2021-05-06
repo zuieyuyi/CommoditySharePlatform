@@ -21,6 +21,8 @@ import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -260,5 +262,58 @@ public class CommodityController {
         file.transferTo(targetFile);
 
         return ResultUtils.success();
+    }
+
+    @RequestMapping(value = "countCommodityEveryMonth",method = RequestMethod.POST)
+    @ResponseBody
+    public Result countCommodityEveryMonth(@RequestParam("year") String year) {
+        List<Integer> count = new ArrayList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+
+        for (int i = 1; i <= 12; i++) {
+            Date date1 = null;
+            Date date2 = null;
+            if (i < 9) {
+                String month1 = "0" + i;
+                String month2 = "0" + (i + 1);
+                try {
+                    date1 = simpleDateFormat.parse(year + "-" + month1);
+                    date2 = simpleDateFormat.parse(year + "-" + month2);
+                    date2 = new Date(date2.getTime()-(1*1000*60*60*24));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else if (i == 9) {
+                String month1 = "09";
+                String month2 = "10";
+                try {
+                    date1 = simpleDateFormat.parse(year + "-" + month1);
+                    date2 = simpleDateFormat.parse(year + "-" + month2);
+                    date2 = new Date(date2.getTime()-(1*1000*60*60*24));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                String month1 = String.valueOf(i);
+                String month2 = String.valueOf(i + 1);
+                try {
+                    date1 = simpleDateFormat.parse(year + "-" + month1);
+                    date2 = simpleDateFormat.parse(year + "-" + month2);
+                    date2 = new Date(date2.getTime()-(1*1000*60*60*24));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            CommodityExample commodityExample = new CommodityExample();
+            CommodityExample.Criteria criteria = commodityExample.createCriteria();
+            criteria.andCommodityCreateDateBetween(date1, date2);
+            criteria.andIsValidEqualTo(1);
+
+            List<Commodity> commodities = commodityService.selectCommodities(commodityExample);
+            count.add(commodities.size());
+        }
+
+        return ResultUtils.success(count);
     }
 }
