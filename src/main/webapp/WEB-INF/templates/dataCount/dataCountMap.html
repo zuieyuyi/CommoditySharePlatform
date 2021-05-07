@@ -4,12 +4,21 @@
 <body>
 <div class="row">
     <div class="col-md-6">
-        <label target="myCountMap" >商品每月发布数量</label>
+        <label target="myCountMap" ><h3>商品每月发布数量</h3></label>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" id="myCountMapDiv">
         <canvas id="myCountMap" width="477" height="320" class="chartjs-render-monitor" style="display: block; width: 477px; height: 320px;"></canvas>
     </div>
     <div id="year" class="col-md-12">
+
+    </div>
+    <div class="col-md-6">
+        <label target="myCountMap" ><h3>订单每年完成比</h3></label>
+    </div>
+    <div id="myOrderPieDiv" class="col-md-12">
+        <canvas id="myOrderPie" width="367" height="306" style="display: block; height: 245px; width: 294px;" class="chartjs-render-monitor"></canvas>
+    </div>
+    <div id="year2" class="col-md-12">
 
     </div>
 </div>
@@ -24,23 +33,30 @@
     // 插件
 
     $(document).ready(function(){
-        buildBtn("#year");
+        buildBtn("#year","year");
+        buildBtn("#year2","year2");
         var date = new Date();
         countCommodityEveryMonth(date.getFullYear());
+        // plugIn2();
+        countOrder(date.getFullYear());
     });
 
-    //删除商品按钮事件
     $(document).on("click",".year",function () {
         countCommodityEveryMonth($(this).val());
     });
 
-    function buildBtn(elm){
+    //删除商品按钮事件
+    $(document).on("click",".year2",function () {
+        countOrder($(this).val());
+    });
+
+    function buildBtn(elm,clazz){
         var father = $(elm);
         var date = new Date();
         var fullYear = date.getFullYear();
         var years = [parseInt(fullYear)-2,parseInt(fullYear)-1,parseInt(fullYear),parseInt(fullYear)+1,parseInt(fullYear)+2];
         $.each(years,function(index,y){
-            $("<input type='button' class='btn year' value='" + y + "'>").appendTo(father);
+            $("<input type='button' class='btn " + clazz + "' value='" + y + "'>").appendTo(father);
         });
     }
 
@@ -61,7 +77,27 @@
         })
     }
 
+    //统计请求
+    function countOrder(year){
+        $.ajax({
+            url: PROJECT_PATH+"/admin/order/countOrder",
+            dataType: "json",
+            data: {"year":year},
+            type: "POST",
+            success: function(result){
+                if (result.code == 10000){
+                    plugIn2(result.data);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+    }
+
     function plugIn(data){
+        var myCountMapDiv = $("#myCountMapDiv");
+        myCountMapDiv.empty();
+        $("<canvas id=\"myCountMap\" width=\"477\" height=\"320\" class=\"chartjs-render-monitor\" style=\"display: block; width: 477px; height: 320px;\"></canvas>").appendTo(myCountMapDiv);
         var ctx = document.getElementById("myCountMap");
         var myLineChart = new Chart(ctx, {
             type: 'line',
@@ -149,6 +185,44 @@
                     }
                 }
             }
+        });
+    }
+
+    function plugIn2(data){
+        var myOrderPieDiv = $("#myOrderPieDiv");
+        myOrderPieDiv.empty();
+        $("<canvas id=\"myOrderPie\" width=\"367\" height=\"306\" style=\"display: block; height: 245px; width: 294px;\" class=\"chartjs-render-monitor\"></canvas>").appendTo(myOrderPieDiv);
+
+        var colors = ['#4e73df', '#1cc88a', '#36b9cc'];
+        var ctx = document.getElementById("myOrderPie");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["完成订单数", "未完成订单数", "退货订单数"],
+                datasets: [{
+                    data: [data["完成订单数"], data["未完成订单数"], data["退货订单数"]],
+                    backgroundColor: colors,
+                    hoverBackgroundColor: colors,
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                legend: {
+                    display: false
+                },
+                cutoutPercentage: 80,
+            },
         });
     }
 

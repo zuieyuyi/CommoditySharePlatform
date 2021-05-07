@@ -3,6 +3,7 @@ package com.commodityshareplatform.subject.controller;
 import com.commodityshareplatform.subject.bean.Order;
 import com.commodityshareplatform.subject.bean.OrderExample;
 import com.commodityshareplatform.subject.bean.User;
+import com.commodityshareplatform.subject.enuminfo.OrderStatusEnum;
 import com.commodityshareplatform.subject.service.IOrderService;
 import com.commodityshareplatform.subject.utils.Result;
 import com.commodityshareplatform.subject.utils.ResultUtils;
@@ -13,7 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("admin")
@@ -113,5 +120,56 @@ public class OrderController {
         }else{
             return ResultUtils.error(-1,"订单保存失败添加失败");
         }
+    }
+
+    /**
+     * 完成订单总数以及未完成订单总数
+     */
+    @RequestMapping(value = "order/countOrder",method = RequestMethod.POST)
+    @ResponseBody
+    public Result countOrder(@RequestParam("year") String year){
+        Map<String,Integer> count = new HashMap<>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+
+        Date date1 = null;
+        Date date2 = null;
+        try {
+            date1 = simpleDateFormat.parse(year);
+            Integer i = Integer.parseInt(year) + 1;
+            date2 = simpleDateFormat.parse(i.toString());
+            date2.setTime(date2.getTime()-(1*1000*60*60*24));
+
+        } catch (ParseException e) {
+            return ResultUtils.error(-1,"日期出错");
+        }
+
+        //1、查出未完成订单总数
+        OrderExample ex = new OrderExample();
+        OrderExample.Criteria criteria = ex.createCriteria();
+        criteria.andOrderCreateDateBetween(date1,date2);
+        criteria.andOrderStatusNotEqualTo(OrderStatusEnum.RETURN_OVER.getStatusCode());
+        criteria.andOrderStatusNotEqualTo(OrderStatusEnum.RETURN_BACK.getStatusCode());
+
+        List<Order> notCompleteOrders = orderService.selectAllOrders(ex);
+
+        count.put("未完成订单数",notCompleteOrders.size());
+        //2、查出退货订单总数
+        OrderExample ex1 = new OrderExample();
+        OrderExample.Criteria criteria1 = ex1.createCriteria();
+        criteria1.andOrderCreateDateBetween(date1,date2);
+        criteria1.andOrderStatusEqualTo(OrderStatusEnum.RETURN_BACK.getStatusCode());
+
+        List<Order> returnOrders = orderService.selectAllOrders(ex1);
+        count.put("退货订单数",returnOrders.size());
+        //3、查出完成订单总数
+        OrderExample ex2 = new OrderExample();
+        OrderExample.Criteria criteria2 = ex2.createCriteria();
+        criteria2.andOrderCreateDateBetween(date1,date2);
+        criteria2.andOrderStatusEqualTo(OrderStatusEnum.RETURN_OVER.getStatusCode());
+
+        List<Order> completeOrders = orderService.selectAllOrders(ex2);
+        count.put("完成订单数",completeOrders.size());
+
+        return ResultUtils.success(count);
     }
 }

@@ -5,6 +5,7 @@ import com.commodityshareplatform.subject.bean.UserExample;
 import com.commodityshareplatform.subject.dao.UserMapper;
 import com.commodityshareplatform.subject.enuminfo.UserStatusEnum;
 import com.commodityshareplatform.subject.service.IUserService;
+import com.commodityshareplatform.subject.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -91,15 +92,9 @@ public class UserService implements IUserService {
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andUserIdEqualTo(user.getUserId());
 
-        User user1 = selectUserById(user.getUserId());
-        user1.setUserName(user.getUserName());
-        user1.setUserPw(user.getUserPw());
-        user1.setUserAddr(user.getUserAddr());
-        user1.setUserEmail(user.getUserEmail());
-        user1.setUserStatus(user.getUserStatus());
-        user1.setUserMoney(user.getUserMoney());
+        user.setUserPw(MD5Utils.stringToMD5(user.getUserPw()).toString());
 
-        int result = userMapper.updateByExample(user1, userExample);
+        int result = userMapper.updateByExampleSelective(user, userExample);
         return result;
     }
 
