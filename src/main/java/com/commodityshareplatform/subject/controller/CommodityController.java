@@ -156,7 +156,7 @@ public class CommodityController {
         }else{
             //新图
             File newImg = files[files.length-1];;
-            if(newImg.exists()){
+            if(newImg.isFile()){
                 //删除旧图片
                 oldImg.delete();
                 //转移新图
@@ -234,7 +234,7 @@ public class CommodityController {
 //        String commodityId = request.getParameter("commodityId") == null?"":request.getParameter("commodityId");
         File dir = null;
         if (!StringUtils.isEmpty(userId)){
-            dir = new File(contextPath+"\\"+userId);
+            dir = new File(contextPath+"/"+userId);
             if (!dir.exists()){
                 dir.mkdirs();
 //                contextPath += "\\" + userId;
