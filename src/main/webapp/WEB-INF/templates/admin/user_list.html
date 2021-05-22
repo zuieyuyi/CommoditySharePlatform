@@ -363,29 +363,33 @@
         var userStatus = $("#userStatus").val();
         var userMoney = $("#userMoney").val();
 
-        $.ajax({
-            url: PROJECT_PATH+"/admin/user",
-            dataType: "json",
-            data: {"userName":userName,
-                "userPw":userPw,
-                "userAddr":userAddr,
-                "userEmail":userEmail,
-                "userStatus":userStatus,
-                "userMoney":userMoney},
-            type: "POST",
-            success: function(result){
-                if (result.code == 10000){
-                    //关闭模态框
-                    $("#add_user_modal").modal("hide");
-                    //清空表单
-                    $("#userAdd")[0].reset();
-                    //刷新页面
-                    toPage(currentNum);
-                }else{
-                    alert(result.msg);
+        if(validateUser(userName,userPw,userAddr,userAddr,userMoney)) {
+            $.ajax({
+                url: PROJECT_PATH + "/admin/user",
+                dataType: "json",
+                data: {
+                    "userName": userName,
+                    "userPw": userPw,
+                    "userAddr": userAddr,
+                    "userEmail": userEmail,
+                    "userStatus": userStatus,
+                    "userMoney": userMoney
+                },
+                type: "POST",
+                success: function (result) {
+                    if (result.code == 10000) {
+                        //关闭模态框
+                        $("#add_user_modal").modal("hide");
+                        //清空表单
+                        $("#userAdd")[0].reset();
+                        //刷新页面
+                        toPage(currentNum);
+                    } else {
+                        alert(result.msg);
+                    }
                 }
-            }
-        })
+            });
+        }
     }
 
     //通过id从数据库中读取对应的数据
@@ -418,31 +422,36 @@
         var userStatus = $("#editUserStatus").val();
         var userMoney = $("#editUserMoney").val();
 
-        $.ajax({
-            url: PROJECT_PATH+"/admin/user",
-            dataType: "json",
-            data: {"_method":"PUT",
-                "userId":userId,
-                "userName":userName,
-                "userPw":userPw,
-                "userAddr":userAddr,
-                "userEmail":userEmail,
-                "userStatus":userStatus,
-                "userMoney":userMoney},
-            type: "POST",
-            success: function(result){
-                if (result.code == 10000){
-                    //关闭模态框
-                    $("#updata_user_modal").modal("hide");
-                    //清空表单
-                    $("#userAdd")[0].reset();
-                    //刷新页面
-                    toPage(currentNum);
-                }else{
-                    alert(result.msg);
+        if(validateUser(userName,userPw,userAddr,userAddr,userMoney)) {
+            $.ajax({
+                url: PROJECT_PATH + "/admin/user",
+                dataType: "json",
+                data: {
+                    "_method": "PUT",
+                    "userId": userId,
+                    "userName": userName,
+                    "userPw": userPw,
+                    "userAddr": userAddr,
+                    "userEmail": userEmail,
+                    "userStatus": userStatus,
+                    "userMoney": userMoney
+                },
+                type: "POST",
+                success: function (result) {
+                    if (result.code == 10000) {
+                        //关闭模态框
+                        $("#updata_user_modal").modal("hide");
+                        //清空表单
+                        $("#userAdd")[0].reset();
+                        alert("用户修改成功");
+                        //刷新页面
+                        toPage(currentNum);
+                    } else {
+                        alert(result.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     //删除用户请求
@@ -462,6 +471,59 @@
                 }
             }
         })
+    }
+
+    function validateUser(name,password,email,addr,money){
+        //用户名校验
+        if (!valiDateLength(name,3,10)){
+            alert("用户名长度应在3-10之间");
+            return false;
+        }
+        //邮箱校验
+        if (email == null || email == undefined || email ==""){
+            alert("邮箱为空");
+            return false;
+        }
+        if (validateEmail(email)){
+            alert("不符合邮箱格式");
+            return false;
+        }
+
+        //密码复杂度校验和长度校验
+        if (password == null || password == undefined || password ==""){
+            alert("密码为空");
+            return false;
+        }
+        if (validateStr(password) && !valiDateLength(password,6,20)){
+            alert("密码必须包含数字字母并且长度为6-20");
+            return false;
+        }
+        //邮箱校验
+        if (email == null || email == undefined || email ==""){
+            alert("邮箱为空");
+            return false;
+        }
+        if (validateEmail(email)){
+            alert("不符合邮箱格式");
+            return false;
+        }
+        if (addr == null || addr == undefined || addr ==""){
+            alert("用户地址为空");
+            return false;
+        }
+        if (!valiDateLength(addr,2,30)){
+            alert("地址长度必须为2-30");
+            return false;
+        }
+        if (parseFloat(money)>100000||parseFloat(money)<=0){
+            alert("金额不能超过1000000或不能小于等于0");
+            return false;
+        }
+        //密码重复验证
+        // if (pwd != repwd){
+        //     alert("两次密码输入不一致，请确认！");
+        // }
+        return true;
     }
     /*]]>*/
 </script>

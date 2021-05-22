@@ -125,16 +125,16 @@ function isMyFloat(floatValue){
     }
     floatValue = valueTrim(floatValue);
     var reg = /^(\d+)(\.\d+)$/;
-    if(isNumber(floatValue)){
-        return true;
-    }
-    if(floatValue.length>3){
-        if(floatValue.substr(0, 1)=="0"){
-            if(floatValue.substr(0, 2)!="0."){
-                return false;
-            }
-        }
-    }
+    // if(isNumber(floatValue)){
+    //     return true;
+    // }
+    // if(floatValue.length>3){
+    //     if(floatValue.substr(0, 1)=="0"){
+    //         if(floatValue.substr(0, 2)!="0."){
+    //             return false;
+    //         }
+    //     }
+    // }
     return reg.test(floatValue);
 }
 /**

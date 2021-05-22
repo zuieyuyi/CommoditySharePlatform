@@ -103,8 +103,8 @@ public class CommodityController {
         Date date = new Date();
         File imgPath = new File(contextPath + "/" + commodity.getCommodityUserId());
         File[] files = imgPath.listFiles();
-        if (files.length == 0){
-            return ResultUtils.error(-1,"请上传文件");
+        if (files == null || files.length == 0){
+            return ResultUtils.error(-1,"请上传图片");
         }
         //通过创建日期排序
         File img = files[files.length-1];

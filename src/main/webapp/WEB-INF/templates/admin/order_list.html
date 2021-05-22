@@ -20,12 +20,12 @@
                                placeholder="订单名">
                     </div>
                     <div class="form-group">
-                        <label for="orderPubUserId">买家</label>
+                        <label for="orderPubUserId">卖家</label>
                         <select class="form-control" id="orderPubUserId" name="orderPubUserId">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="orderUserId">卖家</label>
+                        <label for="orderUserId">买家</label>
                         <select class="form-control" id="orderUserId" onchange="getCommodity('#orderCommodityId','#orderUserId')" name="orderUserId">
                         </select>
                     </div>
@@ -124,12 +124,12 @@
                                placeholder="订单名">
                     </div>
                     <div class="form-group">
-                        <label for="editOrderPubUserId">买家</label>
+                        <label for="editOrderPubUserId">卖家</label>
                         <select class="form-control" id="editOrderPubUserId" name="orderPubUserId">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="editOrderUserId">卖家</label>
+                        <label for="editOrderUserId">买家</label>
                         <select class="form-control" id="editOrderUserId" onchange="getCommodity('#editOrderCommodityId','#editOrderUserId')" name="orderUserId">
                         </select>
                     </div>
@@ -512,37 +512,40 @@
         var orderEndRentTime = dateReplace($("#orderEndRentTime").val());
         var orderBackTime = dateReplace($("#orderBackTime").val());
         var orderReturnTime = dateReplace($("#orderReturnTime").val());
-
-        $.ajax({
-            url: PROJECT_PATH+"/admin/order",
-            dataType: "json",
-            data: {"orderName":orderName,
-                "orderPubUserId":orderPubUserId,
-                "orderUserId":orderUserId,
-                "orderCommodityId":orderCommodityId,
-                "orderCommodityNum":orderCommodityNum,
-                "orderCommodityTotal":orderCommodityTotal,
-                "orderStatus":orderStatus,
-                "orderAddr":orderAddr,
-                "orderArriveAddr":orderArriveAddr,
-                "orderBeginRentTime":orderBeginRentTime,
-                "orderEndRentTime":orderEndRentTime,
-                "orderBackTime":orderBackTime,
-                "orderReturnTime":orderReturnTime},
-            type: "POST",
-            success: function(result){
-                if (result.code == 10000){
-                    //关闭模态框
-                    $("#add_order_modal").modal("hide");
-                    //清空表单
-                    $("#orderAdd")[0].reset();
-                    //刷新页面
-                    toPage(currentNum);
-                }else{
-                    alert(result.msg);
+        if (validateOrder(orderName,orderPubUserId,orderUserId,orderCommodityId,orderCommodityNum,orderCommodityTotal,orderAddr,orderArriveAddr,orderBeginRentTime,orderEndRentTime,orderBackTime,orderReturnTime)) {
+            $.ajax({
+                url: PROJECT_PATH + "/admin/order",
+                dataType: "json",
+                data: {
+                    "orderName": orderName,
+                    "orderPubUserId": orderPubUserId,
+                    "orderUserId": orderUserId,
+                    "orderCommodityId": orderCommodityId,
+                    "orderCommodityNum": orderCommodityNum,
+                    "orderCommodityTotal": orderCommodityTotal,
+                    "orderStatus": orderStatus,
+                    "orderAddr": orderAddr,
+                    "orderArriveAddr": orderArriveAddr,
+                    "orderBeginRentTime": orderBeginRentTime,
+                    "orderEndRentTime": orderEndRentTime,
+                    "orderBackTime": orderBackTime,
+                    "orderReturnTime": orderReturnTime
+                },
+                type: "POST",
+                success: function (result) {
+                    if (result.code == 10000) {
+                        //关闭模态框
+                        $("#add_order_modal").modal("hide");
+                        //清空表单
+                        $("#orderAdd")[0].reset();
+                        //刷新页面
+                        toPage(currentNum);
+                    } else {
+                        alert(result.msg);
+                    }
                 }
-            }
-        })
+            });
+        }
     }
 
     function dateReplace(date){
@@ -594,38 +597,42 @@
         var orderBackTime = dateReplace($("#editOrderBackTime").val());
         var orderReturnTime = dateReplace($("#editOrderReturnTime").val());
 
-        $.ajax({
-            url: PROJECT_PATH+"/admin/order",
-            dataType: "json",
-            data: {"_method":"PUT",
-                "orderId":orderId,
-                "orderName":orderName,
-                "orderPubUserId":orderPubUserId,
-                "orderUserId":orderUserId,
-                "orderCommodityId":orderCommodityId,
-                "orderCommodityNum":orderCommodityNum,
-                "orderCommodityTotal":orderCommodityTotal,
-                "orderStatus":orderStatus,
-                "orderAddr":orderAddr,
-                "orderArriveAddr":orderArriveAddr,
-                "orderBeginRentTime":orderBeginRentTime,
-                "orderEndRentTime":orderEndRentTime,
-                "orderBackTime":orderBackTime,
-                "orderReturnTime":orderReturnTime},
-            type: "POST",
-            success: function(result){
-                if (result.code == 10000){
-                    //关闭模态框
-                    $("#update_order_modal").modal("hide");
-                    //清空表单
-                    $("#orderUpdate")[0].reset();
-                    //刷新页面
-                    toPage(currentNum);
-                }else{
-                    alert(result.msg);
+        if (validateOrder(orderName,orderPubUserId,orderUserId,orderCommodityId,orderCommodityNum,orderCommodityTotal,orderAddr,orderArriveAddr,orderBeginRentTime,orderEndRentTime,orderBackTime,orderReturnTime)) {
+            $.ajax({
+                url: PROJECT_PATH + "/admin/order",
+                dataType: "json",
+                data: {
+                    "_method": "PUT",
+                    "orderId": orderId,
+                    "orderName": orderName,
+                    "orderPubUserId": orderPubUserId,
+                    "orderUserId": orderUserId,
+                    "orderCommodityId": orderCommodityId,
+                    "orderCommodityNum": orderCommodityNum,
+                    "orderCommodityTotal": orderCommodityTotal,
+                    "orderStatus": orderStatus,
+                    "orderAddr": orderAddr,
+                    "orderArriveAddr": orderArriveAddr,
+                    "orderBeginRentTime": orderBeginRentTime,
+                    "orderEndRentTime": orderEndRentTime,
+                    "orderBackTime": orderBackTime,
+                    "orderReturnTime": orderReturnTime
+                },
+                type: "POST",
+                success: function (result) {
+                    if (result.code == 10000) {
+                        //关闭模态框
+                        $("#update_order_modal").modal("hide");
+                        //清空表单
+                        $("#orderUpdate")[0].reset();
+                        //刷新页面
+                        toPage(currentNum);
+                    } else {
+                        alert(result.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     //删除订单请求
@@ -645,6 +652,95 @@
                 }
             }
         })
+    }
+
+    function validateOrder(name,pubUser,user,commodity,num,total,addr,arraddr,rentbegin,rentEnd,rentBack,returnBack){
+        if (!valiDateLength(name,2,18)){
+            alert("订单名长度应在2-18之间");
+            return false;
+        }
+        if (pubUser == null || pubUser == undefined || pubUser == ""){
+            alert("请选择卖家用户");
+            return false;
+        }
+        if (user == null || user == undefined || user == ""){
+            alert("请选择买家用户");
+            return false;
+        }
+        if (commodity == null || commodity == undefined || commodity == ""){
+            alert("请选择商品");
+            return false;
+        }
+        if (num == null || num == undefined || num == ""){
+            alert("请输入商品数量");
+            return false;
+        }
+        if (isMyFloat(num)){
+            alert("请输入一个合法的商品数量");
+            return false;
+        }
+        if (parseInt(num)>1000000||parseInt(num)<=0){
+            alert("商品的数量不能大于1000000或小于等于0");
+            return false;
+        }
+        if (total == null || total == undefined || total == ""){
+            alert("请输入商品总价");
+            return false;
+        }
+        if (parseFloat(total)>1000000||parseFloat(total)<=0){
+            alert("商品的价格不能大于1000000或小于等于0");
+            return false;
+        }
+        if (!valiDateLength(addr,2,30)){
+            alert("发送地址长度应在2-30之间");
+            return false;
+        }
+        if (!valiDateLength(arraddr,2,30)){
+            alert("送达地址长度应在2-30之间");
+            return false;
+        }
+        var beginTime = null;
+        var endTime = null;
+        var returnTime = null;
+        var returnBackTime = null;
+        if (rentbegin == null || rentbegin == undefined || rentbegin == ""){
+            alert("请设置租借开始时间");
+            return false;
+        }else beginTime = new Date(rentbegin);
+        if (rentEnd == null || rentEnd == undefined || rentEnd == ""){
+            alert("请设置租借结束时间");
+            return false;
+        }else endTime = new Date(rentEnd);
+        if (rentBack == null || rentBack == undefined || rentBack == ""){
+            alert("请设置租借返还时间");
+            return false;
+        }else returnTime = new Date(rentBack);
+        if (returnBack == null || returnBack == undefined || returnBack == ""){
+            // alert("请设置租借返还时间");
+            // return false;
+        }else returnBackTime = new Date(returnBack);
+
+        if (beginTime.getTime() > endTime.getTime()){
+            alert("租借开始时间不能小于租借结束时间");
+            return false;
+        }
+        if (endTime.getTime() > returnTime.getTime()){
+            alert("返还时间不能小于租借结束时间");
+            return false;
+        }
+        if (endTime.getTime() > returnTime.getTime()){
+            alert("返还时间不能小于租借结束时间");
+            return false;
+        }
+        if (returnBackTime != null && returnBackTime.getTime() > beginTime.getTime() && returnBackTime.getTime() < endTime.getTime()){
+            alert("退货时间要在开始时间和结束时间之间");
+            return false;
+        }
+        // if ((beginTime.getTime() < now.getTime()) || (endTime.getTime() < now.getTime())){
+        //     alert("租借开始和租借结束时间不能小于当前时间时间");
+        //     return false;
+        // }
+        return true;
     }
     /*]]>*/
 </script>
